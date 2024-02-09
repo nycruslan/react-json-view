@@ -24,12 +24,12 @@ $transition-easing: ease-in-out;
   border-radius: 4px;
   overflow: auto;
   background: $background-color;
-  padding: 0.5rem;
+  padding: 0 0.5rem;
 }
 
 // Node styles
 .node {
-  margin: 0.5rem 0;
+  margin: 0.1rem 0;
   position: relative;
 
   &::before {
@@ -45,7 +45,7 @@ $transition-easing: ease-in-out;
     cursor: pointer;
     user-select: none;
     position: relative;
-    padding-left: 25px; // Adjust padding to fit the arrow icon
+    padding-left: 10px; // Adjust padding to fit the arrow icon
 
     &:hover,
     &:active {
@@ -54,10 +54,8 @@ $transition-easing: ease-in-out;
     }
 
     &.collapsible::before {
-      content: '';
       position: absolute;
       top: 50%;
-      left: 4px;
       width: 0;
       height: 0;
       border: $arrow-size solid transparent; // Create arrow shape
@@ -72,7 +70,7 @@ $transition-easing: ease-in-out;
   }
 
   .collapsibleContent {
-    padding-left: 20px;
+    padding-left: 5px;
     display: inline-block;
     color: map-get($accent-colors, 'primary');
   }
