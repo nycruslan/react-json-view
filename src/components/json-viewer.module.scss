@@ -1,0 +1,88 @@
+// Define variables for colors, spacings, and other reusable properties
+$font-family: 'Fira Code', monospace;
+$base-color: #333;
+$light-accent-color: #eee;
+$primary-accent-color: #007acc;
+$string-color: #d14;
+$number-color: #098658;
+$boolean-color: #00f;
+$null-color: #848584;
+$hover-background-color: #f4f4f4;
+$icon-color: #555;
+$transition-duration: 0.2s;
+$transition-easing: ease-in-out;
+
+.viewer {
+  font-family: $font-family;
+  color: $base-color;
+  line-height: 1.6;
+  font-size: 1rem;
+  font-weight: 100;
+}
+
+.node {
+  margin-left: 1.5rem;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 0;
+    bottom: 0;
+    border-left: 2px solid $light-accent-color;
+  }
+
+  &.nested {
+    margin-top: 0.75rem;
+  }
+}
+
+.key {
+  cursor: pointer;
+  user-select: none;
+
+  &:hover,
+  &:active {
+    // Combine hover and active for consistency
+    background-color: $hover-background-color;
+    text-decoration: underline;
+  }
+
+  &.collapsible::before {
+    content: '▶';
+    display: inline-block;
+    margin-right: 5px;
+    transition: transform $transition-duration $transition-easing;
+  }
+
+  &.expanded.collapsible::before {
+    transform: rotate(90deg);
+  }
+}
+
+.value {
+  .primitiveValue {
+    margin-left: 5px;
+    color: $primary-accent-color; // Default color for primitive values
+
+    &.string {
+      color: $string-color;
+    }
+    &.number {
+      color: $number-color;
+    }
+    &.boolean {
+      color: $boolean-color;
+    }
+    &.null {
+      color: $null-color;
+      font-style: italic;
+    }
+  }
+}
+
+.array::before,
+.object::before {
+  color: $icon-color;
+}
