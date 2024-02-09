@@ -1,51 +1,96 @@
-// Define variables for colors, spacings, and other reusable properties
-$font-family: 'Fira Code', monospace;
-$base-color: #333;
-$light-accent-color: #eee;
-$primary-accent-color: #007acc;
-$string-color: #d14;
-$number-color: #098658;
-$boolean-color: #00f;
-$null-color: #848584;
-$hover-background-color: #f4f4f4;
-$icon-color: #555;
-$transition-duration: 0.2s;
-$transition-easing: ease-in-out;
+// // Dark mode
+// $font-family: 'Fira Code', monospace;
+// $base-color: #282c34; // Darker base for better contrast
+// $background-color: #282c34;
+// $accent-colors: (
+//   'light': #abb2bf,
+//   // Soft grey for lines
+//   'primary': #61afef,
+//   // Blue for property keys
+//   'string': #98c379,
+//   // Green for strings
+//   'number': #d19a66,
+//   // Orange for numbers
+//   'boolean': #56b6c2,
+//   // Cyan for booleans
+//   'null': #e06c75,
+//   // Red for null
+// );
+// $hover-background-color: #2c313a; // Slightly darker background for hover state
+// $icon-color: #61afef; // Blue for icons
+// $transition-properties: (
+//   'duration': 0.2s,
+//   'easing': ease-in-out,
+// );
 
-.viewer {
-  font-family: $font-family;
-  color: $base-color;
-  line-height: 1.6;
-  font-size: 1rem;
-  font-weight: 100;
+// Light Mode Variables
+$font-family: 'Fira Code', monospace;
+$base-color: #333; // A darker color for text on light background
+$background-color: #fff;
+$accent-colors: (
+  'light': #ddd,
+  // Light grey for lines
+  'primary': #1a1a1a,
+  // Darker grey for property keys
+  'string': #028000,
+  // Darker green for strings
+  'number': #1c00cf,
+  // Darker blue for numbers
+  'boolean': #ff8c00,
+  // Darker orange for booleans
+  'null': #a9a9a9,
+  // Darker null color
+);
+$hover-background-color: #e6e6e6; // Light grey for hover state
+$icon-color: #1a1a1a; // Darker icon color for contrast
+$transition-properties: (
+  'duration': 0.2s,
+  'easing': ease-in-out,
+);
+
+// Mixins
+@mixin transition($property) {
+  transition: $property map-get($transition-properties, 'duration')
+    map-get($transition-properties, 'easing');
 }
 
+// Base viewer styles
+.viewer {
+  font-family: $font-family;
+  background-color: $background-color; // White background for the viewer
+  color: $base-color;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  font-weight: 400; // Standard font weight for better readability
+  border-radius: 4px;
+  overflow: auto;
+}
+
+// Node styles
 .node {
-  margin-left: 1.5rem;
+  margin-left: 1rem;
   position: relative;
 
   &.nested {
-    margin-top: 0.75rem;
-    margin-bottom: 0.75rem;
-
     &::before {
+      @include transition('height');
       content: '';
       position: absolute;
-      left: -1.5rem;
+      left: -1rem;
       top: 0;
       bottom: 0;
-      border-left: 2px solid $light-accent-color;
+      border-left: 1px solid map-get($accent-colors, 'light');
     }
   }
 }
 
+// Key styles
 .key {
   cursor: pointer;
   user-select: none;
 
   &:hover,
   &:active {
-    // Combine hover and active for consistency
     background-color: $hover-background-color;
     text-decoration: underline;
   }
@@ -53,8 +98,9 @@ $transition-easing: ease-in-out;
   &.collapsible::before {
     content: '▶';
     display: inline-block;
-    margin-right: 5px;
-    transition: transform $transition-duration $transition-easing;
+    margin-right: 3px;
+    vertical-align: middle;
+    @include transition('transform');
   }
 
   &.expanded.collapsible::before {
@@ -62,27 +108,29 @@ $transition-easing: ease-in-out;
   }
 }
 
+// Value styles
 .value {
   .primitiveValue {
-    margin-left: 5px;
-    color: $primary-accent-color;
+    margin-left: 3px;
+    color: map-get($accent-colors, 'primary');
 
     &.string {
-      color: $string-color;
+      color: map-get($accent-colors, 'string');
     }
     &.number {
-      color: $number-color;
+      color: map-get($accent-colors, 'number');
     }
     &.boolean {
-      color: $boolean-color;
+      color: map-get($accent-colors, 'boolean');
     }
     &.null {
-      color: $null-color;
+      color: map-get($accent-colors, 'null');
       font-style: italic;
     }
   }
 }
 
+// Icon styles
 .array::before,
 .object::before {
   color: $icon-color;

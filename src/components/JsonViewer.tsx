@@ -15,15 +15,14 @@ const PrimitiveValue: React.FC<{ value: string | number | boolean | null }> =
     if (value !== null) valueType = typeof value;
     const className = `${styles.primitiveValue} ${styles[valueType]}`;
 
-    return (
-      <span className={className}>: {JSON.stringify(value, null, 2)}</span>
-    );
+    return <span className={className}>{JSON.stringify(value, null, 2)}</span>;
   });
 
 const JsonNode: React.FC<{ name: string; value: JsonValue }> = memo(
   ({ name, value }) => {
     const [collapsed, setCollapsed] = useState(true);
     const isCollapsible = typeof value === 'object' && value !== null;
+    const isPrimitive = !isCollapsible;
 
     return (
       <div className={styles.node}>
@@ -33,17 +32,19 @@ const JsonNode: React.FC<{ name: string; value: JsonValue }> = memo(
           } ${!collapsed ? styles.expanded : ''}`}
           onClick={() => isCollapsible && setCollapsed(prev => !prev)}
         >
-          &quot;{name}&quot;{isCollapsible ? '' : ':'}
+          &quot;{name}&quot;:
         </span>
-        {isCollapsible ? (
-          !collapsed && (
-            <div className={styles.value}>
-              <JsonViewer data={value} isNested />
-            </div>
-          )
-        ) : (
-          <PrimitiveValue value={value as string | number | boolean | null} />
-        )}
+        {isCollapsible
+          ? !collapsed && (
+              <div className={styles.value}>
+                <JsonViewer data={value} isNested />
+              </div>
+            )
+          : isPrimitive && (
+              <PrimitiveValue
+                value={value as string | number | boolean | null}
+              />
+            )}
       </div>
     );
   }
