@@ -24,17 +24,18 @@ $transition-easing: ease-in-out;
   margin-left: 1.5rem;
   position: relative;
 
-  &::before {
-    content: '';
-    position: absolute;
-    left: -1.5rem;
-    top: 0;
-    bottom: 0;
-    border-left: 2px solid $light-accent-color;
-  }
-
   &.nested {
     margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -1.5rem;
+      top: 0;
+      bottom: 0;
+      border-left: 2px solid $light-accent-color;
+    }
   }
 }
 
@@ -64,7 +65,7 @@ $transition-easing: ease-in-out;
 .value {
   .primitiveValue {
     margin-left: 5px;
-    color: $primary-accent-color; // Default color for primitive values
+    color: $primary-accent-color;
 
     &.string {
       color: $string-color;
