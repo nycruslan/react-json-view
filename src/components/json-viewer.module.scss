@@ -11,94 +11,121 @@ $accent-colors: (
 );
 $hover-background-color: #e6e6e6;
 $icon-color: #1a1a1a;
-$transition-properties: (
-  'duration': 0.2s,
-  'easing': ease-in-out,
-);
+$arrow-size: 5px;
+$transition-duration: 0.2s;
+$transition-easing: ease-in-out;
 
 // Base viewer styles
 .viewer {
   font-family: $font-family;
-
   color: $base-color;
   line-height: 1.5;
   font-size: 0.9rem;
-
   border-radius: 4px;
   overflow: auto;
+  background: $background-color;
+  padding: 0.5rem;
 }
 
 // Node styles
 .node {
-  margin-left: 1rem;
+  margin: 0.5rem 0;
   position: relative;
 
-  &.nested {
-    &::before {
-      content: '';
-      position: absolute;
-      left: -11px;
-      top: 0;
-      bottom: 0;
-      border-left: 1px solid map-get($accent-colors, 'light');
-    }
-  }
-}
-
-.key {
-  cursor: pointer;
-  user-select: none;
-  position: relative;
-  padding-left: 15px; // Adjust padding to fit the larger arrow icon
-
-  &:hover,
-  &:active {
-    background-color: $hover-background-color;
-    text-decoration: underline;
-  }
-
-  &.collapsible::before {
+  &::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 0;
-    width: 0;
-    height: 0;
-    border: 5px solid transparent; // Create arrow shape
-    border-left-color: $icon-color; // Arrow color
-    transform: translateY(-50%) rotate(0deg); // Ensure arrow points right initially
-    transition: transform 0.2s ease-in-out; // Use mixin or explicit transition
+    left: -20px;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid map-get($accent-colors, 'light');
   }
 
-  &.expanded.collapsible::before {
-    transform: translateY(-50%) rotate(90deg); // Rotate arrow to point down
+  .key {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-left: 25px; // Adjust padding to fit the arrow icon
+
+    &:hover,
+    &:active {
+      background-color: $hover-background-color;
+      text-decoration: underline;
+    }
+
+    &.collapsible::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 4px;
+      width: 0;
+      height: 0;
+      border: $arrow-size solid transparent; // Create arrow shape
+      border-left-color: $icon-color; // Arrow color
+      transform: translateY(-50%) rotate(0deg); // Ensure arrow points right initially
+      transition: transform $transition-duration $transition-easing;
+    }
+
+    &.expanded.collapsible::before {
+      transform: translateY(-50%) rotate(90deg); // Rotate arrow to point down
+    }
+  }
+
+  .collapsibleContent {
+    padding-left: 20px;
+    display: inline-block;
+    color: map-get($accent-colors, 'primary');
+  }
+
+  .bracket {
+    font-weight: bold;
+    color: map-get($accent-colors, 'primary');
   }
 }
 
 // Value styles
-.value {
-  .primitiveValue {
-    margin-left: 3px;
-    color: map-get($accent-colors, 'primary');
-
-    &.string {
-      color: map-get($accent-colors, 'string');
-    }
-    &.number {
-      color: map-get($accent-colors, 'number');
-    }
-    &.boolean {
-      color: map-get($accent-colors, 'boolean');
-    }
-    &.null {
-      color: map-get($accent-colors, 'null');
-      font-style: italic;
-    }
+.primitiveValue {
+  display: inline-block;
+  margin-left: 3px;
+  &.string {
+    color: map-get($accent-colors, 'string');
+  }
+  &.number {
+    color: map-get($accent-colors, 'number');
+  }
+  &.boolean {
+    color: map-get($accent-colors, 'boolean');
+  }
+  &.null {
+    color: map-get($accent-colors, 'null');
+    font-style: italic;
   }
 }
 
-// Icon styles
-.array::before,
-.object::before {
-  color: $icon-color;
+// Content styles
+.content {
+  margin-left: 1rem;
+}
+
+// Arrow styles
+.arrowCollapsed,
+.arrowExpanded {
+  display: inline-block;
+  margin-right: 5px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: $arrow-size;
+  border-color: transparent;
+  border-left-color: $icon-color;
+  cursor: pointer;
+  transition: transform $transition-duration $transition-easing;
+}
+
+.arrowCollapsed {
+  transform: rotate(0deg);
+}
+
+.arrowExpanded {
+  transform: rotate(90deg);
 }
