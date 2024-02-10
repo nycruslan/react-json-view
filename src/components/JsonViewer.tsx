@@ -44,22 +44,20 @@ const JsonNode: React.FC<{ name: string; value: JsonValue }> = React.memo(
         >
           {isCollapsible && <CollapsibleIndicator collapsed={collapsed} />}"
           {name}":
-        </span>
-        {isCollapsible ? (
-          collapsed ? (
-            <span
-              className={`${styles.collapsibleContent} ${styles.key} ${
-                isCollapsible ? styles.collapsible : ''
-              }`}
-              onClick={toggleCollapse}
-            >
+          {isCollapsible && collapsed && (
+            <span className={styles.collapsibleContent}>
               {Array.isArray(value) ? '[...]' : '{...}'}
             </span>
-          ) : (
+          )}
+        </span>
+        {!collapsed && isCollapsible ? (
+          <div style={{ paddingLeft: '20px' }}>
+            {' '}
+            {/* Adjust the padding to match your styles */}
             <JsonViewer data={value} />
-          )
+          </div>
         ) : (
-          <PrimitiveValue value={value as Primitive} />
+          !isCollapsible && <PrimitiveValue value={value as Primitive} />
         )}
       </div>
     );
