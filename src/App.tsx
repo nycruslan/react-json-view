@@ -6,6 +6,7 @@ function App() {
       id: 1,
       test: null,
       boolean: true,
+      empty: {},
       name: 'Jane Doe',
       email: 'jane.doe@example.com',
       roles: ['user', 'admin'],
