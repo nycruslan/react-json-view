@@ -16,7 +16,8 @@ const isJsonObject = (value: JsonValue): value is JsonObject =>
 
 const PrimitiveValue: React.FC<{ value: Primitive }> = React.memo(
   ({ value }) => {
-    const className = `${styles.primitiveValue} ${styles[typeof value] || ''}`;
+    const valueType = value === null ? 'null' : typeof value;
+    const className = `${styles.primitiveValue} ${styles[valueType] || ''}`;
     return <span className={className}>{JSON.stringify(value)}</span>;
   }
 );

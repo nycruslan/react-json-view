@@ -7,7 +7,7 @@ $accent-colors: (
   'string': #028000,
   'number': #1c00cf,
   'boolean': #ff8c00,
-  'null': #ff0000,
+  'null': #e30000,
 );
 $hover-background-color: #f6f6f6;
 $arrow-size: 5px;
@@ -82,7 +82,7 @@ $dots-color: rgb(203, 75, 22);
 }
 
 .dots {
-  color: red; /* Apply your desired color */
+  color: $dots-color;
 }
 
 // Value styles
@@ -101,6 +101,8 @@ $dots-color: rgb(203, 75, 22);
   &.null {
     color: map-get($accent-colors, 'null');
     font-style: italic;
+    text-transform: uppercase;
+    background-color: $hover-background-color;
   }
 }
 
