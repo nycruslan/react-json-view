@@ -55,7 +55,7 @@ const JsonNode: React.FC<{ name: string; value: JsonValue }> = React.memo(
               {Array.isArray(value) ? ' [' : ' {'}
             </span>
             <JsonViewer data={value} isRoot={false} />
-            <span className={styles.inlineBracket}>
+            <span className={styles.inlineClosingBracket}>
               {Array.isArray(value) ? ']' : '}'}
             </span>
           </>

@@ -9,7 +9,7 @@ $accent-colors: (
   'boolean': #ff8c00,
   'null': #a9a9a9,
 );
-$hover-background-color: #e6e6e6;
+$hover-background-color: #f1f1f1;
 $icon-color: #1a1a1a;
 $arrow-size: 5px;
 $transition-duration: 0.2s;
@@ -35,7 +35,7 @@ $transition-easing: ease-in-out;
   &::before {
     content: '';
     position: absolute;
-    left: -20px;
+    left: -10px;
     top: 0;
     bottom: 0;
     border-left: 1px solid map-get($accent-colors, 'light');
@@ -50,7 +50,6 @@ $transition-easing: ease-in-out;
     &:hover,
     &:active {
       background-color: $hover-background-color;
-      text-decoration: underline;
     }
 
     &.collapsible::before {
@@ -103,6 +102,10 @@ $transition-easing: ease-in-out;
 // Content styles
 .content {
   margin-left: 1rem;
+}
+
+.inlineClosingBracket {
+  margin-left: 10px;
 }
 
 // Arrow styles
