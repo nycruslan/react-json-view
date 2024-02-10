@@ -1,5 +1,5 @@
-$font-family: 'Fira Code', monospace;
-$base-color: #333;
+$font-family: monospace;
+$base-color: rgb(0, 43, 54);
 $background-color: #fff;
 $accent-colors: (
   'light': #ddd,
@@ -9,18 +9,19 @@ $accent-colors: (
   'boolean': #ff8c00,
   'null': #a9a9a9,
 );
-$hover-background-color: #f1f1f1;
+$hover-background-color: #f6f6f6;
 $icon-color: #1a1a1a;
 $arrow-size: 5px;
 $transition-duration: 0.2s;
 $transition-easing: ease-in-out;
+$icon-color: rgb(42, 161, 152);
 
 // Base viewer styles
 .viewer {
   font-family: $font-family;
   color: $base-color;
   line-height: 1.5;
-  font-size: 0.9rem;
+  font-size: 13px;
   border-radius: 4px;
   overflow: auto;
   background: $background-color;
@@ -113,6 +114,7 @@ $transition-easing: ease-in-out;
 .arrowExpanded {
   display: inline-block;
   margin-right: 5px;
+  border-left-color: $icon-color; // This sets the color of the arrow
   width: 0;
   height: 0;
   border-style: solid;
