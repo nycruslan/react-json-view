@@ -40,32 +40,38 @@ const JsonNode: React.FC<{ name: string; value: JsonValue }> = React.memo(
       <div className={styles.node}>
         <span
           className={`${styles.key} ${isCollapsible ? styles.collapsible : ''}`}
-          onClick={isCollapsible ? toggleCollapse : undefined}
+          onClick={toggleCollapse}
         >
           {isCollapsible && <CollapsibleIndicator collapsed={collapsed} />}"
           {name}":
-          {collapsed && isCollapsible && (
-            <span className={styles.collapsibleContent}>
-              {Array.isArray(value) ? '[' : '{'}
-              {Object.keys(value).length ? (
-                <span className={styles.dots}>...</span>
-              ) : null}
-              {Array.isArray(value) ? ']' : '}'}
-            </span>
-          )}
         </span>
-        {isCollapsible && !collapsed && (
-          <>
-            <span className={styles.inlineBracket}>
+        {isCollapsible ? (
+          collapsed ? (
+            <span
+              className={styles.collapsibleContent}
+              onClick={toggleCollapse}
+            >
               {Array.isArray(value) ? '[' : '{'}
-            </span>
-            <JsonViewer data={value} isRoot={false} />
-            <span className={styles.inlineClosingBracket}>
+              {Object.keys(value).length ? '...' : ''}
               {Array.isArray(value) ? ']' : '}'}
             </span>
-          </>
+          ) : (
+            <>
+              <span className={styles.inlineBracket} onClick={toggleCollapse}>
+                {Array.isArray(value) ? '[' : '{'}
+              </span>
+              <JsonViewer data={value} isRoot={false} />
+              <span
+                className={styles.inlineClosingBracket}
+                onClick={toggleCollapse}
+              >
+                {Array.isArray(value) ? ']' : '}'}
+              </span>
+            </>
+          )
+        ) : (
+          <PrimitiveValue value={value as Primitive} />
         )}
-        {!isCollapsible && <PrimitiveValue value={value as Primitive} />}
       </div>
     );
   }
