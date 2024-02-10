@@ -7,14 +7,14 @@ $accent-colors: (
   'string': #028000,
   'number': #1c00cf,
   'boolean': #ff8c00,
-  'null': #a9a9a9,
+  'null': #ff0000,
 );
 $hover-background-color: #f6f6f6;
-$icon-color: #1a1a1a;
 $arrow-size: 5px;
 $transition-duration: 0.2s;
 $transition-easing: ease-in-out;
 $icon-color: rgb(42, 161, 152);
+$dots-color: rgb(203, 75, 22);
 
 // Base viewer styles
 .viewer {
@@ -81,6 +81,10 @@ $icon-color: rgb(42, 161, 152);
   }
 }
 
+.dots {
+  color: red; /* Apply your desired color */
+}
+
 // Value styles
 .primitiveValue {
   display: inline-block;
@@ -107,6 +111,10 @@ $icon-color: rgb(42, 161, 152);
 
 .inlineClosingBracket {
   margin-left: 10px;
+}
+
+.inlineBracket {
+  margin-left: 5px;
 }
 
 // Arrow styles

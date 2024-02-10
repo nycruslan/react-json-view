@@ -4,6 +4,8 @@ function App() {
   const data = {
     user: {
       id: 1,
+      test: null,
+      boolean: true,
       name: 'Jane Doe',
       email: 'jane.doe@example.com',
       roles: ['user', 'admin'],
