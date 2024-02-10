@@ -33,7 +33,6 @@ const JsonNode: React.FC<{ name: string; value: JsonValue }> = React.memo(
   ({ name, value }) => {
     const [collapsed, setCollapsed] = useState(true);
     const toggleCollapse = useCallback(() => setCollapsed(prev => !prev), []);
-
     const isCollapsible = isJsonObject(value) || Array.isArray(value);
 
     return (
@@ -44,54 +43,63 @@ const JsonNode: React.FC<{ name: string; value: JsonValue }> = React.memo(
         >
           {isCollapsible && <CollapsibleIndicator collapsed={collapsed} />}"
           {name}":
-          {isCollapsible && collapsed && (
+          {collapsed && isCollapsible && (
             <span className={styles.collapsibleContent}>
-              {Array.isArray(value) ? '[...]' : '{...}'}
+              {Array.isArray(value) ? ' [...]' : ' {...}'}
             </span>
           )}
         </span>
-        {!collapsed && isCollapsible ? (
-          <div style={{ paddingLeft: '20px' }}>
-            {' '}
-            {/* Adjust the padding to match your styles */}
-            <JsonViewer data={value} />
-          </div>
-        ) : (
-          !isCollapsible && <PrimitiveValue value={value as Primitive} />
+        {isCollapsible && !collapsed && (
+          <>
+            <span className={styles.inlineBracket}>
+              {Array.isArray(value) ? ' [' : ' {'}
+            </span>
+            <JsonViewer data={value} isRoot={false} />
+            <span className={styles.inlineBracket}>
+              {Array.isArray(value) ? ']' : '}'}
+            </span>
+          </>
         )}
+        {!isCollapsible && <PrimitiveValue value={value as Primitive} />}
       </div>
     );
   }
 );
 
-const JsonViewer: React.FC<{ data: JsonValue }> = ({ data }) => {
-  const renderContent = useMemo(() => {
-    if (isPrimitive(data)) {
-      return <PrimitiveValue value={data} />;
-    }
+const JsonViewer: React.FC<{ data: JsonValue; isRoot?: boolean }> = React.memo(
+  ({ data, isRoot = true }) => {
+    const renderContent = useMemo(() => {
+      if (isPrimitive(data)) {
+        return <PrimitiveValue value={data} />;
+      }
 
-    const entries = isJsonObject(data)
-      ? Object.entries(data)
-      : data.map((value, index) => [index.toString(), value]);
+      const entries = isJsonObject(data)
+        ? Object.entries(data)
+        : data.map((value, index) => [index.toString(), value]);
 
-    return (
-      <>
-        <span className={styles.bracket}>
-          {Array.isArray(data) ? '[' : '{'}
-        </span>
-        <div className={styles.content}>
-          {entries.map(([key, value]) => (
-            <JsonNode key={String(key)} name={String(key)} value={value} />
-          ))}
-        </div>
-        <span className={styles.bracket}>
-          {Array.isArray(data) ? ']' : '}'}
-        </span>
-      </>
-    );
-  }, [data]);
+      return (
+        <>
+          {isRoot && (
+            <span className={styles.bracket}>
+              {Array.isArray(data) ? '[' : '{'}
+            </span>
+          )}
+          <div className={styles.content}>
+            {entries.map(([key, value]) => (
+              <JsonNode key={String(key)} name={String(key)} value={value} />
+            ))}
+          </div>
+          {isRoot && (
+            <span className={styles.bracket}>
+              {Array.isArray(data) ? ']' : '}'}
+            </span>
+          )}
+        </>
+      );
+    }, [data, isRoot]);
 
-  return <div className={styles.viewer}>{renderContent}</div>;
-};
+    return <div className={styles.viewer}>{renderContent}</div>;
+  }
+);
 
 export default JsonViewer;
