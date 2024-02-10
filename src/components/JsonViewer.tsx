@@ -38,31 +38,31 @@ const JsonNode: React.FC<{ name: string; value: JsonValue }> = React.memo(
 
     return (
       <div className={styles.node}>
-        <span
-          className={`${styles.key} ${isCollapsible ? styles.collapsible : ''}`}
-          onClick={toggleCollapse}
-        >
-          {isCollapsible && <CollapsibleIndicator collapsed={collapsed} />}"
-          {name}":
-        </span>
         {isCollapsible ? (
           collapsed ? (
             <span
-              className={styles.collapsibleContent}
+              className={`${styles.key} ${styles.collapsible}`}
               onClick={toggleCollapse}
             >
-              {Array.isArray(value) ? '[' : '{'}
+              {isCollapsible && <CollapsibleIndicator collapsed={collapsed} />}"
+              {name}": {Array.isArray(value) ? '[' : '{'}
               {Object.keys(value).length ? '...' : ''}
               {Array.isArray(value) ? ']' : '}'}
             </span>
           ) : (
             <>
-              <span className={styles.inlineBracket} onClick={toggleCollapse}>
-                {Array.isArray(value) ? '[' : '{'}
+              <span
+                className={`${styles.key} ${styles.collapsible}`}
+                onClick={toggleCollapse}
+              >
+                {isCollapsible && (
+                  <CollapsibleIndicator collapsed={collapsed} />
+                )}
+                "{name}": {Array.isArray(value) ? '[' : '{'}
               </span>
               <JsonViewer data={value} isRoot={false} />
               <span
-                className={styles.inlineClosingBracket}
+                className={`${styles.inlineClosingBracket} ${styles.key} ${styles.collapsible}`}
                 onClick={toggleCollapse}
               >
                 {Array.isArray(value) ? ']' : '}'}
@@ -70,7 +70,10 @@ const JsonNode: React.FC<{ name: string; value: JsonValue }> = React.memo(
             </>
           )
         ) : (
-          <PrimitiveValue value={value as Primitive} />
+          <>
+            <span className={`${styles.key}`}>"{name}": </span>
+            <PrimitiveValue value={value as Primitive} />
+          </>
         )}
       </div>
     );
