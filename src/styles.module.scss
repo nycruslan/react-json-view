@@ -25,7 +25,10 @@ $dots-color: rgb(203, 75, 22);
   border-radius: 4px;
   overflow: auto;
   background: $background-color;
-  padding: 0 0.5rem;
+}
+
+.viewer > .node:first-child::before {
+  display: none;
 }
 
 // Node styles

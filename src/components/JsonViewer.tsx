@@ -60,9 +60,7 @@ const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
         </div>
       ) : (
         <>
-          <span className={`${styles.key} ${styles.nonCollapsible}`}>
-            "{name}":{' '}
-          </span>
+          <span className={styles.key}>"{name}": </span>
           <PrimitiveValue value={value as Primitive} />
         </>
       )}
