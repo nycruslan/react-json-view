@@ -2,7 +2,7 @@ import { memo, ReactElement } from 'react';
 import { CollapsibleIndicator } from './CollapsibleIndicator';
 import { PrimitiveValue } from './PrimitiveValue';
 import { useCollapsible } from '../hooks';
-import { isCollapsible, getBrackets } from '../utils';
+import { isCollapsible, getBrackets, getKeyClass } from '../utils';
 import styles from '../styles.module.scss';
 import type { JsonNodeProps, Primitive } from '../types';
 
@@ -10,10 +10,7 @@ export const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
   const { collapsed, toggleCollapse } = useCollapsible();
   const collapsible = isCollapsible(value);
   const [openingBracket, closingBracket] = getBrackets(value);
-
-  const keyClass = collapsible
-    ? `${styles.key} ${styles.collapsible}`
-    : `${styles.key} ${styles.primitive}`;
+  const keyClass = getKeyClass(collapsible);
 
   return (
     <div className={styles.node}>

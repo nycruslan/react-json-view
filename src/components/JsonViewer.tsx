@@ -3,22 +3,19 @@ import { CollapsibleIndicator } from './CollapsibleIndicator';
 import { PrimitiveValue } from './PrimitiveValue';
 import { JsonNode } from './JsonNode';
 import { useCollapsible } from '../hooks';
-import { isCollapsible, getBrackets } from '../utils';
+import { isCollapsible, getBrackets, getKeyClass } from '../utils';
 import styles from '../styles.module.scss';
 import type { JsonViewerProps, Primitive } from '../types';
 
 const JsonViewer = memo(
-  ({ data, rootName = 'root' }: JsonViewerProps): ReactElement => {
+  ({ data, rootName = 'root', style }: JsonViewerProps): ReactElement => {
     const { collapsed, toggleCollapse } = useCollapsible();
     const collapsible = isCollapsible(data);
     const [openingBracket, closingBracket] = getBrackets(data);
-
-    const keyClass = collapsible
-      ? `${styles.key} ${styles.collapsible}`
-      : `${styles.key} ${styles.primitive}`;
+    const keyClass = getKeyClass(collapsible);
 
     return (
-      <div className={`${styles.viewer} ${styles.node}`}>
+      <div style={style} className={`${styles.viewer} ${styles.node}`}>
         {collapsible ? (
           <>
             <span onClick={toggleCollapse} className={keyClass}>

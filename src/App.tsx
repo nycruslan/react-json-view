@@ -52,9 +52,9 @@ function App() {
   };
 
   return (
-    <>
+    <div>
       <JsonViewer data={data} />
-    </>
+    </div>
   );
 }
 

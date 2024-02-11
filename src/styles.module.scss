@@ -79,17 +79,6 @@ $dots-color: rgb(203, 75, 22);
       background-color: transparent; // Remove hover effect
     }
   }
-
-  .collapsibleContent {
-    padding-left: 5px;
-    display: inline-block;
-    color: map-get($accent-colors, 'primary');
-  }
-
-  .bracket {
-    font-weight: bold;
-    color: map-get($accent-colors, 'primary');
-  }
 }
 
 .dots {

@@ -1,3 +1,5 @@
+import { CSSProperties } from 'react';
+
 export type Primitive = string | number | boolean | null;
 export interface JsonObject {
   [key: string]: JsonValue;
@@ -13,6 +15,7 @@ export interface JsonNodeProps {
 export interface JsonViewerProps {
   data: JsonValue;
   rootName?: string;
+  style?: CSSProperties;
 }
 
 export interface PrimitiveValueProps {
