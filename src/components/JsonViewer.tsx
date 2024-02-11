@@ -13,14 +13,15 @@ const JsonViewer = memo(
     const collapsible = isCollapsible(data);
     const [openingBracket, closingBracket] = getBrackets(data);
 
+    const keyClass = collapsible
+      ? `${styles.key} ${styles.collapsible}`
+      : `${styles.key} ${styles.primitive}`;
+
     return (
       <div className={`${styles.viewer} ${styles.node}`}>
         {collapsible ? (
           <>
-            <span
-              onClick={toggleCollapse}
-              className={`${styles.key} ${styles.collapsible}`}
-            >
+            <span onClick={toggleCollapse} className={keyClass}>
               <CollapsibleIndicator collapsed={collapsed} />
               {rootName && `"${rootName}": `}
               {collapsed ? (
@@ -46,10 +47,7 @@ const JsonViewer = memo(
                       ))
                     : null}
                 </div>
-                <span
-                  className={`${styles.inlineClosingBracket} ${styles.key}`}
-                  onClick={toggleCollapse}
-                >
+                <span className={keyClass} onClick={toggleCollapse}>
                   {closingBracket}
                 </span>
               </>
@@ -57,9 +55,7 @@ const JsonViewer = memo(
           </>
         ) : (
           <>
-            <span className={`${styles.key} ${styles.nonCollapsible}`}>
-              "{rootName}":{' '}
-            </span>
+            <span className={keyClass}>"{rootName}": </span>
             <PrimitiveValue value={data as Primitive} />
           </>
         )}

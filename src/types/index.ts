@@ -12,7 +12,7 @@ export interface JsonNodeProps {
 
 export interface JsonViewerProps {
   data: JsonValue;
-  rootName?: string; // Added rootName prop
+  rootName?: string;
 }
 
 export interface PrimitiveValueProps {

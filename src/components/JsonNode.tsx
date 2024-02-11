@@ -11,7 +11,6 @@ export const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
   const collapsible = isCollapsible(value);
   const [openingBracket, closingBracket] = getBrackets(value);
 
-  // Determine the appropriate class for the key based on collapsibility
   const keyClass = collapsible
     ? `${styles.key} ${styles.collapsible}`
     : `${styles.key} ${styles.primitive}`;
@@ -20,10 +19,7 @@ export const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
     <div className={styles.node}>
       {collapsible ? (
         <>
-          <span
-            onClick={toggleCollapse}
-            className={keyClass} // Use dynamic class name
-          >
+          <span onClick={toggleCollapse} className={keyClass}>
             <CollapsibleIndicator collapsed={collapsed} />
             <span>"{name}": </span>
             {collapsed ? (
