@@ -52,22 +52,19 @@ const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
                     ))
                   : null}
               </div>
-              <span
-                className={`${styles.inlineClosingBracket} ${styles.key}`}
-                onClick={toggleCollapse}
-              >
+              <span className={styles.key} onClick={toggleCollapse}>
                 {closingBracket}
               </span>
             </div>
           )}
         </div>
       ) : (
-        <span className={styles.key}>
-          "{name}":{' '}
-          {typeof value !== 'object' ? (
-            <PrimitiveValue value={value as Primitive} />
-          ) : null}
-        </span>
+        <>
+          <span className={`${styles.key} ${styles.nonCollapsible}`}>
+            "{name}":{' '}
+          </span>
+          <PrimitiveValue value={value as Primitive} />
+        </>
       )}
     </div>
   );
@@ -123,12 +120,12 @@ const JsonViewer = memo(
               )}
             </div>
           ) : (
-            <span className={styles.key}>
-              "{rootName}":{' '}
-              {typeof data !== 'object' ? (
-                <PrimitiveValue value={data as Primitive} />
-              ) : null}
-            </span>
+            <>
+              <span className={`${styles.key} ${styles.nonCollapsible}`}>
+                "{rootName}":{' '}
+              </span>
+              <PrimitiveValue value={data as Primitive} />
+            </>
           )}
         </div>
       </div>
