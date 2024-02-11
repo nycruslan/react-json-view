@@ -1,11 +1,11 @@
 import { memo, ReactElement } from 'react';
 import { CollapsibleIndicator } from './CollapsibleIndicator';
 import { PrimitiveValue } from './PrimitiveValue';
+import { JsonNode } from './JsonNode';
 import { useCollapsible } from '../hooks';
 import { isCollapsible, getBrackets } from '../utils';
 import styles from '../styles.module.scss';
 import type { JsonViewerProps, Primitive } from '../types';
-import { JsonNode } from './JsonNode';
 
 const JsonViewer = memo(
   ({ data, rootName = 'root' }: JsonViewerProps): ReactElement => {
