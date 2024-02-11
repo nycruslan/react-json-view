@@ -23,7 +23,10 @@ const JsonViewer = memo(
     copy = false, // Default to false
   }: JsonViewerProps): ReactElement => {
     const initialCollapsed = expandLevel < 1;
-    const { collapsed, toggleCollapse } = useCollapsible(initialCollapsed);
+    const { collapsed, toggleCollapse } = useCollapsible(
+      initialCollapsed,
+      `jsonViewer-${rootName}`
+    );
     const collapsible = isCollapsible(data);
     const [openingBracket, closingBracket] = getBrackets(data);
     const keyClass = getKeyClass(collapsible);

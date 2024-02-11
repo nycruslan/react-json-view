@@ -21,7 +21,10 @@ export const JsonNode = memo(
     copy = false,
   }: JsonNodeProps): ReactElement => {
     const initialCollapsed = expandLevel <= 0;
-    const { collapsed, toggleCollapse } = useCollapsible(initialCollapsed);
+    const { collapsed, toggleCollapse } = useCollapsible(
+      initialCollapsed,
+      `jsonViewer-${name}`
+    );
     const collapsible = isCollapsible(value);
     const [openingBracket, closingBracket] = getBrackets(value);
     const keyClass = getKeyClass(collapsible);
