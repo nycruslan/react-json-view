@@ -8,8 +8,14 @@ import styles from '../styles.module.scss';
 import type { JsonViewerProps, Primitive } from '../types';
 
 const JsonViewer = memo(
-  ({ data, rootName = 'root', style }: JsonViewerProps): ReactElement => {
-    const { collapsed, toggleCollapse } = useCollapsible();
+  ({
+    data,
+    rootName = 'root',
+    style,
+    expandLevel = 0,
+  }: JsonViewerProps): ReactElement => {
+    const initialCollapsed = expandLevel < 1;
+    const { collapsed, toggleCollapse } = useCollapsible(initialCollapsed);
     const collapsible = isCollapsible(data);
     const [openingBracket, closingBracket] = getBrackets(data);
     const keyClass = getKeyClass(collapsible);
@@ -57,7 +63,12 @@ const JsonViewer = memo(
               >
                 {typeof data === 'object' && data !== null
                   ? Object.entries(data).map(([key, value]) => (
-                      <JsonNode key={key} name={key} value={value} />
+                      <JsonNode
+                        key={key}
+                        name={key}
+                        value={value}
+                        expandLevel={expandLevel - 1}
+                      />
                     ))
                   : null}
               </div>

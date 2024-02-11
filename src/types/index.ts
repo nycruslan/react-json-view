@@ -10,12 +10,14 @@ export type JsonValue = Primitive | JsonObject | JsonArray;
 export interface JsonNodeProps {
   name: string;
   value: JsonValue;
+  expandLevel: number;
 }
 
 export interface JsonViewerProps {
   data: JsonValue;
   rootName?: string;
   style?: CSSProperties;
+  expandLevel?: number;
 }
 
 export interface PrimitiveValueProps {
