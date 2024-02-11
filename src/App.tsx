@@ -53,7 +53,7 @@ function App() {
 
   return (
     <div>
-      <JsonViewer data={data} />
+      <JsonViewer data={data} rootName='data' />
     </div>
   );
 }

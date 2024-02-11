@@ -14,13 +14,28 @@ const JsonViewer = memo(
     const [openingBracket, closingBracket] = getBrackets(data);
     const keyClass = getKeyClass(collapsible);
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLSpanElement>) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        toggleCollapse();
+        event.preventDefault();
+      }
+    };
+
     return (
       <div style={style} className={`${styles.viewer} ${styles.node}`}>
         {collapsible ? (
           <>
-            <span onClick={toggleCollapse} className={keyClass}>
+            <span
+              tabIndex={0}
+              role='button'
+              aria-expanded={!collapsed}
+              aria-label={`${rootName} expandable`}
+              onClick={toggleCollapse}
+              onKeyDown={handleKeyDown}
+              className={keyClass}
+            >
               <CollapsibleIndicator collapsed={collapsed} />
-              {rootName && `"${rootName}": `}
+              {rootName}:{' '}
               {collapsed ? (
                 <>
                   {openingBracket}
@@ -36,23 +51,33 @@ const JsonViewer = memo(
               )}
             </span>
             {!collapsed && (
-              <>
-                <div className={styles.content}>
-                  {typeof data === 'object' && data !== null
-                    ? Object.entries(data).map(([key, value]) => (
-                        <JsonNode key={key} name={key} value={value} />
-                      ))
-                    : null}
-                </div>
-                <span className={keyClass} onClick={toggleCollapse}>
-                  {closingBracket}
-                </span>
-              </>
+              <div
+                className={styles.content}
+                aria-label={`${rootName} content`}
+              >
+                {typeof data === 'object' && data !== null
+                  ? Object.entries(data).map(([key, value]) => (
+                      <JsonNode key={key} name={key} value={value} />
+                    ))
+                  : null}
+              </div>
+            )}
+            {!collapsed && (
+              <span
+                tabIndex={0}
+                role='button'
+                aria-label={`Collapse ${rootName}`}
+                onClick={toggleCollapse}
+                onKeyDown={handleKeyDown}
+                className={keyClass}
+              >
+                {closingBracket}
+              </span>
             )}
           </>
         ) : (
           <>
-            <span className={keyClass}>"{rootName}": </span>
+            <span className={keyClass}>{rootName}: </span>
             <PrimitiveValue value={data as Primitive} />
           </>
         )}

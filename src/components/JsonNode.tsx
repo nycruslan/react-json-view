@@ -1,4 +1,4 @@
-import { memo, ReactElement } from 'react';
+import { memo, ReactElement, useEffect, useRef } from 'react';
 import { CollapsibleIndicator } from './CollapsibleIndicator';
 import { PrimitiveValue } from './PrimitiveValue';
 import { useCollapsible } from '../hooks';
@@ -11,12 +11,35 @@ export const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
   const collapsible = isCollapsible(value);
   const [openingBracket, closingBracket] = getBrackets(value);
   const keyClass = getKeyClass(collapsible);
+  const toggleRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (collapsible && toggleRef.current) {
+      toggleRef.current.focus();
+    }
+  }, [collapsed, collapsible]);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      toggleCollapse();
+      event.preventDefault();
+    }
+  };
 
   return (
     <div className={styles.node}>
       {collapsible ? (
         <>
-          <span onClick={toggleCollapse} className={keyClass}>
+          <span
+            tabIndex={0}
+            role='button'
+            aria-expanded={!collapsed}
+            aria-label={`${name} expandable`}
+            onClick={toggleCollapse}
+            onKeyDown={handleKeyDown}
+            ref={toggleRef}
+            className={keyClass}
+          >
             <CollapsibleIndicator collapsed={collapsed} />
             <span>"{name}": </span>
             {collapsed ? (
@@ -52,7 +75,14 @@ export const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
                     ))
                   : null}
               </div>
-              <span className={styles.key} onClick={toggleCollapse}>
+              <span
+                tabIndex={0}
+                role='button'
+                aria-label={`Collapse ${name}`}
+                onClick={toggleCollapse}
+                onKeyDown={handleKeyDown}
+                className={keyClass}
+              >
                 {closingBracket}
               </span>
             </>
@@ -60,7 +90,7 @@ export const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
         </>
       ) : (
         <>
-          <span className={keyClass}>"{name}": </span>{' '}
+          <span className={keyClass}>"{name}": </span>
           <PrimitiveValue value={value as Primitive} />
         </>
       )}
