@@ -15,7 +15,7 @@ interface JsonNodeProps {
 
 interface JsonViewerProps {
   data: JsonValue;
-  isRoot?: boolean;
+  rootName?: string; // Added rootName prop
 }
 
 const isPrimitive = (value: JsonValue): value is Primitive =>
@@ -45,54 +45,64 @@ const CollapsibleIndicator: React.FC<CollapsibleIndicatorProps> = React.memo(
   )
 );
 
-interface JsonNodeProps {
-  name: string;
-  value: JsonValue;
-}
-
 const JsonNode: React.FC<JsonNodeProps> = React.memo(({ name, value }) => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleCollapse = useCallback(() => setCollapsed(prev => !prev), []);
   const isCollapsible = typeof value === 'object' && value !== null;
+  const openingBracket = Array.isArray(value) ? '[' : '{';
+  const closingBracket = Array.isArray(value) ? ']' : '}';
 
   return (
     <div className={styles.node}>
       {isCollapsible ? (
         <>
           <span
-            className={`${styles.key} ${styles.collapsible}`}
             onClick={toggleCollapse}
+            className={`${styles.key} ${styles.collapsible}`}
           >
-            <CollapsibleIndicator collapsed={collapsed} />"{name}":{' '}
+            <CollapsibleIndicator collapsed={collapsed} />
+            <span>"{name}": </span>
             {collapsed ? (
               <>
-                {Array.isArray(value) ? '[' : '{'}
-                {Object.keys(value).length ? (
-                  <span className={styles.dots}>...</span>
-                ) : null}
-                {Array.isArray(value) ? ']' : '}'}
+                <span>
+                  {openingBracket}
+                  <span className={styles.dots}>
+                    {Object.keys(value).length ? '...' : ''}
+                  </span>
+                  {closingBracket}
+                </span>
               </>
-            ) : Array.isArray(value) ? (
-              '['
             ) : (
-              '{'
+              <span>{openingBracket}</span>
             )}
           </span>
           {!collapsed && (
-            <>
-              <JsonViewer data={value} isRoot={false} />
-              <span
-                className={`${styles.inlineClosingBracket} ${styles.key}`}
-                onClick={toggleCollapse}
-              >
-                {Array.isArray(value) ? ']' : '}'}
-              </span>
-            </>
+            <div className={styles.content}>
+              {Array.isArray(value)
+                ? value.map((item, index) => (
+                    <JsonNode
+                      key={index.toString()}
+                      name={index.toString()}
+                      value={item}
+                    />
+                  ))
+                : Object.entries(value).map(([key, val]) => (
+                    <JsonNode key={key} name={key} value={val} />
+                  ))}
+            </div>
+          )}
+          {!collapsed && (
+            <span
+              className={`${styles.inlineClosingBracket} ${styles.key}`}
+              onClick={toggleCollapse}
+            >
+              {closingBracket}
+            </span>
           )}
         </>
       ) : (
         <>
-          <span className={styles.key}>"{name}":</span>
+          <span className={styles.key}>"{name}": </span>
           <PrimitiveValue value={value as Primitive} />
         </>
       )}
@@ -101,8 +111,8 @@ const JsonNode: React.FC<JsonNodeProps> = React.memo(({ name, value }) => {
 });
 
 const JsonViewer: React.FC<JsonViewerProps> = React.memo(
-  ({ data, isRoot = true }) => {
-    const [collapsed, setCollapsed] = useState(isRoot);
+  ({ data, rootName = 'root' }) => {
+    const [collapsed, setCollapsed] = useState(true); // Adjusted to always start as collapsed
     const toggleCollapse = useCallback(() => setCollapsed(prev => !prev), []);
 
     const renderContent = useMemo(() => {
@@ -114,22 +124,20 @@ const JsonViewer: React.FC<JsonViewerProps> = React.memo(
 
       return (
         <>
-          {isRoot && (
-            <span
-              className={`${styles.key} ${styles.collapsible}`}
-              onClick={toggleCollapse}
-            >
-              <CollapsibleIndicator collapsed={collapsed} />
-              {Array.isArray(data) ? '[' : '{'}
-              {collapsed && entries.length ? (
-                <span className={styles.dots}>...</span>
-              ) : null}
-            </span>
-          )}
+          <span
+            className={`${styles.key} ${styles.collapsible}`}
+            onClick={toggleCollapse}
+          >
+            <CollapsibleIndicator collapsed={collapsed} />
+            {rootName ? `"${rootName}": ` : ''}
+            {Array.isArray(data) ? '[' : '{'}
+            {collapsed && entries.length ? (
+              <span className={styles.dots}>...</span>
+            ) : null}
+          </span>
           {!collapsed && (
             <div className={styles.content}>
               {entries.map(([key, value]) => (
-                // Convert key to string explicitly to avoid TypeScript errors
                 <JsonNode
                   key={key.toString()}
                   name={key.toString()}
@@ -138,19 +146,15 @@ const JsonViewer: React.FC<JsonViewerProps> = React.memo(
               ))}
             </div>
           )}
-          {isRoot && (
-            <span
-              className={`${styles.inlineClosingBracket} ${styles.key} ${
-                collapsed ? styles.collapsible : ''
-              }`}
-              onClick={toggleCollapse}
-            >
-              {Array.isArray(data) ? ']' : '}'}
-            </span>
-          )}
+          <span
+            className={`${styles.inlineClosingBracket} ${styles.key}`}
+            onClick={toggleCollapse}
+          >
+            {Array.isArray(data) ? ']' : '}'}
+          </span>
         </>
       );
-    }, [data, isRoot, toggleCollapse, collapsed]);
+    }, [data, rootName, toggleCollapse, collapsed]);
 
     return <div className={styles.viewer}>{renderContent}</div>;
   }
