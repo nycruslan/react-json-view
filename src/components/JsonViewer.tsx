@@ -11,13 +11,18 @@ const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
   const collapsible = isCollapsible(value);
   const [openingBracket, closingBracket] = getBrackets(value);
 
+  // Determine the appropriate class for the key based on collapsibility
+  const keyClass = collapsible
+    ? `${styles.key} ${styles.collapsible}`
+    : `${styles.key} ${styles.primitive}`;
+
   return (
     <div className={styles.node}>
       {collapsible ? (
         <div>
           <span
             onClick={toggleCollapse}
-            className={`${styles.key} ${styles.collapsible}`}
+            className={keyClass} // Use dynamic class name
           >
             <CollapsibleIndicator collapsed={collapsed} />
             <span>"{name}": </span>
@@ -28,7 +33,9 @@ const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
                 value !== null &&
                 Object.keys(value).length ? (
                   <span className={styles.dots}>...</span>
-                ) : null}
+                ) : (
+                  ''
+                )}
                 {closingBracket}
               </>
             ) : (
@@ -60,7 +67,7 @@ const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
         </div>
       ) : (
         <>
-          <span className={styles.key}>"{name}": </span>
+          <span className={keyClass}>"{name}": </span>{' '}
           <PrimitiveValue value={value as Primitive} />
         </>
       )}
