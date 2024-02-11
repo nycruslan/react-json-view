@@ -52,9 +52,9 @@ function App() {
   };
 
   return (
-    <>
+    <div style={{ display: 'flex', placeContent: 'center' }}>
       <JsonViewer data={data} />
-    </>
+    </div>
   );
 }
 

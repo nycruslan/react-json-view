@@ -19,7 +19,7 @@ export const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
   return (
     <div className={styles.node}>
       {collapsible ? (
-        <div>
+        <>
           <span
             onClick={toggleCollapse}
             className={keyClass} // Use dynamic class name
@@ -43,7 +43,7 @@ export const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
             )}
           </span>
           {!collapsed && (
-            <div>
+            <>
               <div className={styles.content}>
                 {Array.isArray(value)
                   ? value.map((item, index) => (
@@ -62,9 +62,9 @@ export const JsonNode = memo(({ name, value }: JsonNodeProps): ReactElement => {
               <span className={styles.key} onClick={toggleCollapse}>
                 {closingBracket}
               </span>
-            </div>
+            </>
           )}
-        </div>
+        </>
       ) : (
         <>
           <span className={keyClass}>"{name}": </span>{' '}
