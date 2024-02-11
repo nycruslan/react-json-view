@@ -53,7 +53,7 @@ function App() {
 
   return (
     <div>
-      <JsonViewer data={data} rootName='data' expandLevel={1} />
+      <JsonViewer data={data} rootName='data' expandLevel={1} copy />
     </div>
   );
 }

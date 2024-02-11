@@ -1,25 +1,30 @@
-import { memo, ReactElement } from 'react';
+import { KeyboardEvent, memo, ReactElement } from 'react';
 import { CollapsibleIndicator } from './CollapsibleIndicator';
 import { PrimitiveValue } from './PrimitiveValue';
 import { useCollapsible } from '../hooks';
-import { isCollapsible, getBrackets, getKeyClass } from '../utils';
+import {
+  isCollapsible,
+  getBrackets,
+  getKeyClass,
+  handleKeyDown,
+  handleCopy,
+} from '../utils';
 import styles from '../styles.module.scss';
 import type { JsonNodeProps, Primitive } from '../types';
+import { CopyButton } from './CopyButton';
 
 export const JsonNode = memo(
-  ({ name, value, expandLevel = 0 }: JsonNodeProps): ReactElement => {
-    const initialCollapsed = expandLevel <= 0; // Adjust for child nodes to sync with root
+  ({
+    name,
+    value,
+    expandLevel = 0,
+    copy = false,
+  }: JsonNodeProps): ReactElement => {
+    const initialCollapsed = expandLevel <= 0;
     const { collapsed, toggleCollapse } = useCollapsible(initialCollapsed);
     const collapsible = isCollapsible(value);
     const [openingBracket, closingBracket] = getBrackets(value);
     const keyClass = getKeyClass(collapsible);
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        toggleCollapse();
-        event.preventDefault();
-      }
-    };
 
     return (
       <div className={styles.node}>
@@ -31,7 +36,9 @@ export const JsonNode = memo(
               aria-expanded={!collapsed}
               aria-label={`${name} expandable`}
               onClick={toggleCollapse}
-              onKeyDown={handleKeyDown}
+              onKeyDown={(e: KeyboardEvent<HTMLDivElement>) =>
+                handleKeyDown(e, toggleCollapse)
+              }
               className={keyClass}
             >
               <CollapsibleIndicator collapsed={collapsed} />
@@ -52,6 +59,9 @@ export const JsonNode = memo(
                 openingBracket
               )}
             </span>
+            {copy && (
+              <CopyButton handleCopy={() => handleCopy({ name, value })} />
+            )}
             {!collapsed && (
               <>
                 <div className={styles.content}>
@@ -62,6 +72,7 @@ export const JsonNode = memo(
                           name={index.toString()}
                           value={item}
                           expandLevel={expandLevel - 1}
+                          copy={copy}
                         />
                       ))
                     : typeof value === 'object' && value !== null
@@ -71,6 +82,7 @@ export const JsonNode = memo(
                           name={key}
                           value={val}
                           expandLevel={expandLevel - 1}
+                          copy={copy}
                         />
                       ))
                     : null}
@@ -80,7 +92,9 @@ export const JsonNode = memo(
                   role='button'
                   aria-label={`Collapse ${name}`}
                   onClick={toggleCollapse}
-                  onKeyDown={handleKeyDown}
+                  onKeyDown={(e: KeyboardEvent<HTMLDivElement>) =>
+                    handleKeyDown(e, toggleCollapse)
+                  }
                   className={keyClass}
                 >
                   {closingBracket}
@@ -90,8 +104,11 @@ export const JsonNode = memo(
           </>
         ) : (
           <>
-            <span className={keyClass}>"{name}": </span>
+            <span className={keyClass}>"{name}":</span>
             <PrimitiveValue value={value as Primitive} />
+            {copy && (
+              <CopyButton handleCopy={() => handleCopy({ name, value })} />
+            )}
           </>
         )}
       </div>

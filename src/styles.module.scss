@@ -134,3 +134,15 @@ $dots-color: rgb(203, 75, 22);
 .arrowExpanded {
   transform: rotate(90deg);
 }
+
+.copyButton {
+  cursor: pointer;
+  background-color: #eee;
+  border: none;
+  border-radius: 3px;
+  margin-left: 5px;
+  padding: 0 5px;
+  &:hover {
+    background-color: #ddd;
+  }
+}

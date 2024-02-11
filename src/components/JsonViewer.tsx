@@ -1,11 +1,18 @@
-import { memo, ReactElement } from 'react';
+import { KeyboardEvent, memo, ReactElement } from 'react';
 import { CollapsibleIndicator } from './CollapsibleIndicator';
 import { PrimitiveValue } from './PrimitiveValue';
 import { JsonNode } from './JsonNode';
 import { useCollapsible } from '../hooks';
-import { isCollapsible, getBrackets, getKeyClass } from '../utils';
+import {
+  isCollapsible,
+  getBrackets,
+  getKeyClass,
+  handleKeyDown,
+  handleCopy,
+} from '../utils';
 import styles from '../styles.module.scss';
 import type { JsonViewerProps, Primitive } from '../types';
+import { CopyButton } from './CopyButton';
 
 const JsonViewer = memo(
   ({
@@ -13,19 +20,13 @@ const JsonViewer = memo(
     rootName = 'root',
     style,
     expandLevel = 0,
+    copy = false, // Default to false
   }: JsonViewerProps): ReactElement => {
     const initialCollapsed = expandLevel < 1;
     const { collapsed, toggleCollapse } = useCollapsible(initialCollapsed);
     const collapsible = isCollapsible(data);
     const [openingBracket, closingBracket] = getBrackets(data);
     const keyClass = getKeyClass(collapsible);
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLSpanElement>) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        toggleCollapse();
-        event.preventDefault();
-      }
-    };
 
     return (
       <div style={style} className={`${styles.viewer} ${styles.node}`}>
@@ -37,7 +38,9 @@ const JsonViewer = memo(
               aria-expanded={!collapsed}
               aria-label={`${rootName} expandable`}
               onClick={toggleCollapse}
-              onKeyDown={handleKeyDown}
+              onKeyDown={(e: KeyboardEvent<HTMLDivElement>) =>
+                handleKeyDown(e, toggleCollapse)
+              }
               className={keyClass}
             >
               <CollapsibleIndicator collapsed={collapsed} />
@@ -56,6 +59,11 @@ const JsonViewer = memo(
                 openingBracket
               )}
             </span>
+            {copy && (
+              <CopyButton
+                handleCopy={() => handleCopy({ name: rootName, value: data })}
+              />
+            )}
             {!collapsed && (
               <div
                 className={styles.content}
@@ -68,6 +76,7 @@ const JsonViewer = memo(
                         name={key}
                         value={value}
                         expandLevel={expandLevel - 1}
+                        copy={copy}
                       />
                     ))
                   : null}
@@ -79,7 +88,9 @@ const JsonViewer = memo(
                 role='button'
                 aria-label={`Collapse ${rootName}`}
                 onClick={toggleCollapse}
-                onKeyDown={handleKeyDown}
+                onKeyDown={(e: KeyboardEvent<HTMLDivElement>) =>
+                  handleKeyDown(e, toggleCollapse)
+                }
                 className={keyClass}
               >
                 {closingBracket}
