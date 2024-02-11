@@ -47,7 +47,9 @@ const JsonNode: React.FC<{ name: string; value: JsonValue }> = React.memo(
               {isCollapsible && <CollapsibleIndicator collapsed={collapsed} />}"
               {name}":
               {Array.isArray(value) ? ' [' : ' {'}
-              <span className={styles.dots}>...</span>
+              {Object.keys(value).length ? (
+                <span className={styles.dots}>...</span>
+              ) : null}
               {Array.isArray(value) ? ']' : '}'}
             </span>
           ) : (
