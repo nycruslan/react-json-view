@@ -144,7 +144,7 @@ $dots-color: rgb(203, 75, 22);
   margin-left: 5px;
   padding: 0 5px;
   opacity: 0;
-  transition: opacity $transition-duration $transition-easing;
+  transition: opacity 0.1s $transition-easing;
   pointer-events: none; // Initially disable interaction
 }
 
