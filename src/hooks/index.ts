@@ -9,13 +9,14 @@ export const useCollapsible = (initialState: boolean = true, id: string) => {
 
   const { states, setCollapsedState } = context;
   const [collapsed, setCollapsed] = useState<boolean>(
-    states[id] ?? initialState
+    () => states[id] ?? initialState
   );
 
   const toggleCollapse = useCallback(() => {
     setCollapsed(prev => {
       const newState = !prev;
-      setCollapsedState(id, newState);
+      // Update the state in a useEffect to avoid the warning
+      requestAnimationFrame(() => setCollapsedState(id, newState));
       return newState;
     });
   }, [id, setCollapsedState]);
