@@ -1,5 +1,4 @@
-import JsonViewer from './components/JsonViewer';
-import { CollapsibleProvider } from './context';
+import { JsonViewer } from './JsonViewer';
 
 function App() {
   const data = {
@@ -53,18 +52,16 @@ function App() {
   };
 
   return (
-    <CollapsibleProvider>
-      <JsonViewer
-        data={data}
-        rootName='data'
-        expandLevel={1}
-        onCopy={({ keys, value }) => {
-          const keyPath = keys.slice(1).join('.');
+    <JsonViewer
+      data={data}
+      rootName='data'
+      expandLevel={1}
+      onCopy={({ keys, value }) => {
+        const keyPath = keys.slice(1).join('.');
 
-          console.log({ keyPath, value });
-        }}
-      />
-    </CollapsibleProvider>
+        console.log({ keyPath, value });
+      }}
+    />
   );
 }
 

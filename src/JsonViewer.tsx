@@ -1,13 +1,13 @@
 // Import the necessary dependencies
 import { memo, ReactElement } from 'react';
 
-import type { JsonViewerProps } from '../types';
+import type { JsonViewerProps } from './types';
 
-import { JsonViewerContent } from './JsonViewerContent';
-import { CollapsibleProvider } from '../context';
+import { JsonViewerContent } from './components/JsonViewerContent';
+import { CollapsibleProvider } from './context';
 
 // Define the JsonViewer component
-const JsonViewer = memo(
+export const JsonViewer = memo(
   ({
     data,
     rootName = 'root',
@@ -28,5 +28,3 @@ const JsonViewer = memo(
     );
   }
 );
-
-export default JsonViewer;
