@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { CollapsibleContext } from '../context'; // Adjust the import path as necessary
+import { CollapsibleContext } from '../context';
 
 export const useCollapsible = (initialState: boolean = true, id: string) => {
   const context = useContext(CollapsibleContext);
@@ -15,13 +15,11 @@ export const useCollapsible = (initialState: boolean = true, id: string) => {
   const toggleCollapse = useCallback(() => {
     setCollapsed(prev => {
       const newState = !prev;
-      // Update the state in a useEffect to avoid the warning
       requestAnimationFrame(() => setCollapsedState(id, newState));
       return newState;
     });
   }, [id, setCollapsedState]);
 
-  // Effect to handle external updates to initialState or id
   useEffect(() => {
     if (id in states) {
       setCollapsed(states[id]);
