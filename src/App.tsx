@@ -54,7 +54,7 @@ function App() {
 
   return (
     <CollapsibleProvider>
-      <JsonViewer data={data} rootName='data' expandLevel={1} copy />
+      <JsonViewer data={data} rootName='data' expandLevel={1} />
     </CollapsibleProvider>
   );
 }

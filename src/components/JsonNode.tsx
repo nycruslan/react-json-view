@@ -7,7 +7,6 @@ import {
   getBrackets,
   getKeyClass,
   handleKeyDown,
-  handleCopy,
 } from '../utils';
 import styles from '../styles.module.scss';
 import type { JsonNodeProps, Primitive } from '../types';
@@ -16,9 +15,10 @@ import { CopyButton } from './CopyButton';
 export const JsonNode = memo(
   ({
     name,
+    keys = [],
     value,
     expandLevel = 0,
-    copy = false,
+    onCopy,
   }: JsonNodeProps): ReactElement => {
     const initialCollapsed = expandLevel <= 0;
     const { collapsed, toggleCollapse } = useCollapsible(
@@ -28,6 +28,11 @@ export const JsonNode = memo(
     const collapsible = isCollapsible(value);
     const [openingBracket, closingBracket] = getBrackets(value);
     const keyClass = getKeyClass(collapsible);
+
+    const handleCopy = () => {
+      const copyInfo = { keys: [...keys, name], value };
+      onCopy?.(copyInfo);
+    };
 
     return (
       <div className={styles.node}>
@@ -62,9 +67,7 @@ export const JsonNode = memo(
                 openingBracket
               )}
             </span>
-            {copy && (
-              <CopyButton handleCopy={() => handleCopy({ name, value })} />
-            )}
+            {onCopy && <CopyButton handleCopy={handleCopy} />}
             {!collapsed && (
               <>
                 <div className={styles.content}>
@@ -75,7 +78,10 @@ export const JsonNode = memo(
                           name={index.toString()}
                           value={item}
                           expandLevel={expandLevel - 1}
-                          copy={copy}
+                          keys={
+                            keys.includes(name) ? [...keys] : [...keys, name]
+                          }
+                          onCopy={onCopy}
                         />
                       ))
                     : typeof value === 'object' && value !== null
@@ -85,7 +91,10 @@ export const JsonNode = memo(
                           name={key}
                           value={val}
                           expandLevel={expandLevel - 1}
-                          copy={copy}
+                          keys={
+                            keys.includes(name) ? [...keys] : [...keys, name]
+                          }
+                          onCopy={onCopy}
                         />
                       ))
                     : null}
@@ -109,9 +118,7 @@ export const JsonNode = memo(
           <>
             <span className={keyClass}>"{name}":</span>
             <PrimitiveValue value={value as Primitive} />
-            {copy && (
-              <CopyButton handleCopy={() => handleCopy({ name, value })} />
-            )}
+            {onCopy && <CopyButton handleCopy={handleCopy} />}
           </>
         )}
       </div>

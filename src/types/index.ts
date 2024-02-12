@@ -11,7 +11,8 @@ export interface JsonNodeProps {
   name: string;
   value: JsonValue;
   expandLevel: number;
-  copy?: boolean;
+  keys?: string[];
+  onCopy?: (info: { keys: string[]; value: JsonValue }) => void; // Added line
 }
 
 export interface JsonViewerProps {
@@ -20,6 +21,7 @@ export interface JsonViewerProps {
   style?: CSSProperties;
   expandLevel?: number;
   copy?: boolean;
+  onCopy?: (info: { keys: string[]; value: JsonValue }) => void; // Added line
 }
 
 export interface PrimitiveValueProps {

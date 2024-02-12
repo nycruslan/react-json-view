@@ -8,7 +8,6 @@ import {
   getBrackets,
   getKeyClass,
   handleKeyDown,
-  handleCopy,
 } from '../utils';
 import styles from '../styles.module.scss';
 import type { JsonViewerProps, Primitive } from '../types';
@@ -20,7 +19,7 @@ const JsonViewer = memo(
     rootName = 'root',
     style,
     expandLevel = 0,
-    copy = false, // Default to false
+    onCopy, // Add this line
   }: JsonViewerProps): ReactElement => {
     const initialCollapsed = expandLevel < 1;
     const { collapsed, toggleCollapse } = useCollapsible(
@@ -62,9 +61,12 @@ const JsonViewer = memo(
                 openingBracket
               )}
             </span>
-            {copy && (
+            {onCopy && (
               <CopyButton
-                handleCopy={() => handleCopy({ name: rootName, value: data })}
+                handleCopy={() => {
+                  const copyInfo = { keys: [rootName], value: data };
+                  onCopy(copyInfo);
+                }}
               />
             )}
             {!collapsed && (
@@ -77,9 +79,10 @@ const JsonViewer = memo(
                       <JsonNode
                         key={key}
                         name={key}
+                        keys={[rootName, key]} // Start with rootName and add the current key
                         value={value}
                         expandLevel={expandLevel - 1}
-                        copy={copy}
+                        onCopy={onCopy}
                       />
                     ))
                   : null}

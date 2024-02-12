@@ -21,11 +21,3 @@ export const handleKeyDown = (
     event.preventDefault();
   }
 };
-
-export const handleCopy = ({
-  name,
-  value,
-}: {
-  name: string;
-  value: JsonValue;
-}) => navigator.clipboard.writeText(JSON.stringify({ [name]: value }));
