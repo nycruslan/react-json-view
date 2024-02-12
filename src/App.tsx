@@ -54,7 +54,16 @@ function App() {
 
   return (
     <CollapsibleProvider>
-      <JsonViewer data={data} rootName='data' expandLevel={1} />
+      <JsonViewer
+        data={data}
+        rootName='data'
+        expandLevel={1}
+        onCopy={({ keys, value }) => {
+          const keyPath = keys.slice(1).join('.');
+
+          console.log({ keyPath, value });
+        }}
+      />
     </CollapsibleProvider>
   );
 }

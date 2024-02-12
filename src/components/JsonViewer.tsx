@@ -19,7 +19,7 @@ const JsonViewer = memo(
     rootName = 'root',
     style,
     expandLevel = 0,
-    onCopy, // Add this line
+    onCopy,
   }: JsonViewerProps): ReactElement => {
     const initialCollapsed = expandLevel < 1;
     const { collapsed, toggleCollapse } = useCollapsible(
@@ -29,6 +29,10 @@ const JsonViewer = memo(
     const collapsible = isCollapsible(data);
     const [openingBracket, closingBracket] = getBrackets(data);
     const keyClass = getKeyClass(collapsible);
+
+    if (!data) {
+      return <p>No data to show</p>;
+    }
 
     return (
       <div style={style} className={`${styles.viewer} ${styles.node}`}>
