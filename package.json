@@ -1,13 +1,17 @@
 {
-  "name": "json-viewer-react",
+  "name": "view-json-react",
   "version": "1.0.0",
   "type": "module",
-  "main": "./dist/json-viewer-react.cjs.js",
-  "module": "./dist/json-viewer-react.esm.js",
+  "main": "./dist/view-json-react.cjs.js",
+  "module": "./dist/view-json-react.esm.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nycruslan/react-json-view.git"
+  },
   "exports": {
     ".": {
-      "import": "./dist/json-viewer-react.esm.js",
-      "require": "./dist/json-viewer-react.cjs.js",
+      "import": "./dist/view-json-react.esm.js",
+      "require": "./dist/view-json-react.cjs.js",
       "types": "./dist/index.d.ts"
     }
   },
@@ -46,11 +50,11 @@
   "license": "MIT",
   "size-limit": [
     {
-      "path": "dist/json-viewer-react.cjs.js",
+      "path": "dist/view-json-react.cjs.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/json-viewer-react.esm.js",
+      "path": "dist/view-json-react.esm.js",
       "limit": "10 KB"
     }
   ]

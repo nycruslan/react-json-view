@@ -15,13 +15,13 @@ Welcome to the JsonViewer component library! This React-based tool is designed t
 Install the JsonViewer component library with npm:
 
 ```bash
-npm install json-viewer-react
+npm install view-json-react
 ```
 
 Or with Yarn:
 
 ```bash
-yarn add json-viewer-react
+yarn add view-json-react
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ Incorporate the JsonViewer component into your React application like so:
 
 ```jsx
 import React from 'react';
-import { JsonViewer } from 'json-viewer-react';
+import { JsonViewer } from 'view-json-react';
 
 const App = () => {
   const jsonData = {

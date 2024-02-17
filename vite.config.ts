@@ -19,7 +19,7 @@ export default defineConfig({
       name: 'JsonViewerReact',
       formats: ['es', 'cjs'],
       fileName: format =>
-        `json-viewer-react.${format === 'es' ? 'esm' : 'cjs'}.js`,
+        `view-json-react.${format === 'es' ? 'esm' : 'cjs'}.js`,
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
