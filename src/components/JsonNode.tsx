@@ -20,10 +20,11 @@ export const JsonNode = memo(
     expandLevel = 0,
     onCopy,
   }: JsonNodeProps): ReactElement => {
+    const uniquePathId = keys.concat(name).join('-');
     const initialCollapsed = expandLevel <= 0;
     const { collapsed, toggleCollapse } = useCollapsible(
       initialCollapsed,
-      `jsonViewer-${name}`
+      `jsonViewer-${uniquePathId}`
     );
     const collapsible = isCollapsible(value);
     const [openingBracket, closingBracket] = getBrackets(value);
