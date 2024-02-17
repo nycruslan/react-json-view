@@ -9,8 +9,7 @@ export default defineConfig({
     react(),
     cssInjectedByJsPlugin(),
     dts({
-      outDir: 'dist',
-      staticImport: true,
+      rollupTypes: true,
     }),
   ],
   build: {

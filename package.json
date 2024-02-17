@@ -1,6 +1,6 @@
 {
   "name": "view-json-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "main": "./dist/view-json-react.cjs.js",
   "module": "./dist/view-json-react.esm.js",
@@ -48,6 +48,27 @@
     "vite-plugin-dts": "^3.7.2"
   },
   "license": "MIT",
+  "keywords": [
+    "json",
+    "react",
+    "json viewer",
+    "json visualizer",
+    "react component",
+    "data visualization",
+    "collapsible json",
+    "expandable json",
+    "json tree view",
+    "json explorer",
+    "json parser",
+    "interactive json",
+    "development tool",
+    "web development",
+    "frontend",
+    "UI component",
+    "code visualization",
+    "json formatter",
+    "react library"
+  ],
   "size-limit": [
     {
       "path": "dist/view-json-react.cjs.js",
