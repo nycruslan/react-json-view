@@ -4,6 +4,7 @@
   "type": "module",
   "main": "./dist/view-json-react.cjs.js",
   "module": "./dist/view-json-react.esm.js",
+  "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/nycruslan/react-json-view.git"
