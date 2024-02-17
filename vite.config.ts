@@ -11,8 +11,6 @@ export default defineConfig({
     dts({
       outDir: 'dist',
       staticImport: true,
-      cleanVueFileName: true,
-      insertTypesEntry: true,
     }),
   ],
   build: {

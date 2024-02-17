@@ -1,53 +1,43 @@
 # JsonViewer Component Library
 
-Welcome to the JsonViewer component library, a React-based tool designed to render JSON data in a beautifully structured, collapsible format. This library offers a convenient way to visualize JSON structures with optional levels of expansion and supports copying data directly from the viewer.
+Welcome to the JsonViewer component library! This React-based tool is designed to render JSON data in a beautifully structured, collapsible format. It offers a convenient and intuitive way to visualize JSON structures, with features that enhance both functionality and user experience.
 
 ## Features
 
-- **Collapsible JSON View**: Easily collapse and expand sections of your JSON data for better visualization.
-- **Customizable Expansion Level**: Control the initial expansion level to display your JSON data as needed.
-- **Copy Functionality**: Optional support for copying data elements directly from the viewer.
-- **Styling**: Apply custom styles to the JSON viewer to match your application's design.
-- **Root Name Customization**: Set a custom name for the root node of your JSON data.
+- **Collapsible JSON View**: Toggle visibility for sections of your JSON data for improved readability.
+- **Customizable Expansion Level**: Define the initial expansion level to tailor the display of your JSON data.
+- **Copy Functionality**: Enable users to copy data elements directly from the viewer.
+- **Custom Styling**: Style the JSON viewer to seamlessly integrate with your application's aesthetics.
+- **Root Name Customization**: Assign a custom name to the root node of your JSON structure for clearer representation.
 
 ## Installation
 
-You can install the JsonViewer component library into your project by running:
+Install the JsonViewer component library with npm:
 
 ```bash
-npm install your-jsonviewer-package-name
+npm install json-viewer-react
 ```
 
-or if you use Yarn:
+Or with Yarn:
 
 ```bash
-yarn add your-jsonviewer-package-name
+yarn add json-viewer-react
 ```
 
 ## Usage
 
-Here's a simple way to use the JsonViewer component in your React application:
+Incorporate the JsonViewer component into your React application like so:
 
 ```jsx
 import React from 'react';
-import { JsonViewer } from 'your-jsonviewer-package-name';
+import { JsonViewer } from 'json-viewer-react';
 
 const App = () => {
   const jsonData = {
-    name: 'John Doe',
-    age: 30,
-    address: {
-      street: '123 Main St',
-      city: 'Anytown',
-      state: 'CA',
-    },
+    /* your JSON data */
   };
 
-  return (
-    <div>
-      <JsonViewer data={jsonData} expandLevel={1} />
-    </div>
-  );
+  return <JsonViewer data={jsonData} expandLevel={1} />;
 };
 
 export default App;
@@ -55,15 +45,19 @@ export default App;
 
 ## Props
 
-- **data** (required): The JSON data you want to visualize.
-- **rootName** (optional): A string representing the name of the root node. Default is `'root'`.
-- **style** (optional): Custom styles to apply to the viewer.
-- **expandLevel** (optional): An integer indicating how many levels in the JSON structure should be expanded by default. Default is `0`.
-- **onCopy** (optional): A callback function that gets triggered when a data element is copied.
+The JsonViewer component accepts the following props:
 
-## Styling
+- `data` (required): The JSON data to visualize.
+- `rootName` (optional, default: `'root'`): Name for the root node.
+- `style` (optional): CSS properties for custom styling.
+- `expandLevel` (optional, default: `0`): Initial JSON structure expansion level.
+- `onCopy` (optional): Callback for the copy action.
 
-The JsonViewer component accepts a `style` prop allowing you to customize its appearance. For example:
+## Customization
+
+### Styling
+
+Apply custom styles via the `style` prop:
 
 ```jsx
 <JsonViewer
@@ -72,27 +66,21 @@ The JsonViewer component accepts a `style` prop allowing you to customize its ap
 />
 ```
 
-## Copy Functionality
+### Copy Functionality
 
-To enable copying data from the viewer, pass a function to the `onCopy` prop:
+Enable data copying with the `onCopy` prop:
 
 ```jsx
 <JsonViewer
   data={yourData}
-  onCopy={copyData => console.log('Data copied:', copyData)}
+  onCopy={copyData => console.log('Copied data:', copyData)}
 />
 ```
 
-The `copyData` object contains the keys and values selected for copying.
-
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue for any bugs, feature requests, or improvements.
+We welcome contributions! Feel free to open an issue or submit a pull request for any bugs, feature requests, or improvements.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-This readme provides a basic overview and setup instructions for the JsonViewer component library. Be sure to adjust the installation instructions and package name according to your actual package details.
+JsonViewer is made available under the MIT License. See the [LICENSE](./LICENSE) file for more details.
