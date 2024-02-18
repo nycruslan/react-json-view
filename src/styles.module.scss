@@ -46,23 +46,9 @@ $dots-color: rgb(203, 75, 22);
     display: inline-flex;
     align-items: center;
 
-    &::before {
-      content: '';
-      display: inline-block;
-      margin-right: 5px;
-      border: $arrow-size solid transparent;
-      border-left-color: $icon-color; // Ensure arrow points right
-      transition: transform $transition-duration $transition-easing;
-      transform-origin: center;
-    }
-
     &.collapsible:hover,
     &.collapsible:active {
       background-color: $hover-background-color;
-    }
-
-    &.expanded::before {
-      transform: rotate(90deg); // Rotate arrow
     }
 
     &.primitive {
@@ -77,8 +63,29 @@ $dots-color: rgb(203, 75, 22);
     }
   }
 
+  .keyName {
+    margin-right: 5px;
+  }
+
   .dots {
     color: $dots-color;
+  }
+}
+
+.arrow {
+  display: inline-block;
+  margin-right: 5px;
+  border: $arrow-size solid transparent;
+  border-left-color: $icon-color;
+  transition: transform $transition-duration $transition-easing;
+  transform-origin: center;
+
+  &.collapsed {
+    transform: rotate(0deg);
+  }
+
+  &.expanded {
+    transform: rotate(90deg);
   }
 }
 
@@ -119,7 +126,7 @@ $dots-color: rgb(203, 75, 22);
 }
 
 .copySuccess {
-  background-color: #4caf50;
+  background-color: #7ae582;
   opacity: 1;
 }
 
