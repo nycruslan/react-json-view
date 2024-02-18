@@ -25,11 +25,12 @@ $dots-color: rgb(203, 75, 22);
 }
 
 .node {
-  margin: 5px 0;
+  margin: 3px 0;
   &:first-child {
     margin-top: 0;
   }
-  &:not(:root) {
+
+  &:not(:root):before {
     &::before {
       content: '';
       position: absolute;

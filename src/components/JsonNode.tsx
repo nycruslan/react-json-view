@@ -70,7 +70,16 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
                     onCopy={onCopy}
                   />
                 ))}
-                {closingBracket}
+                <span
+                  tabIndex={0}
+                  role='button'
+                  aria-expanded={!collapsed}
+                  onClick={toggleCollapse}
+                  onKeyDown={e => handleKeyDown(e, toggleCollapse)}
+                  className={keyClass}
+                >
+                  {closingBracket}
+                </span>
               </span>
             )}
           </>

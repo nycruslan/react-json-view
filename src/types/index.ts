@@ -21,7 +21,7 @@ export interface JsonNodeProps {
 
 export interface JsonViewerProps {
   data: JsonValue;
-  rootName?: string | false;
+  rootName?: string;
   style?: CSSProperties;
   expandLevel?: number;
   copy?: boolean;
