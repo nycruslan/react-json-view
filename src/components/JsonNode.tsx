@@ -17,18 +17,19 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
     name,
     rootName,
     keys = [],
-    value,
+    data,
     expandLevel = 0,
     onCopy,
     isRoot = false,
+    style,
   }) => {
     const path = keys.join('-');
     const { collapsed, toggleCollapse } = useCollapsible(
       expandLevel <= 0,
       `jsonViewer-${path}`
     );
-    const collapsible = isCollapsible(value);
-    const [openingBracket, closingBracket] = getBrackets(value);
+    const collapsible = isCollapsible(data);
+    const [openingBracket, closingBracket] = getBrackets(data);
     const keyClass = getKeyClass(collapsible);
 
     const handleCopy = () => {
@@ -36,17 +37,17 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
 
       const copyInfo = {
         keys: newKeys,
-        value,
+        value: data,
       };
       onCopy?.(copyInfo);
     };
 
-    if (value === undefined) return <p>No data to show</p>;
+    if (data === undefined) return <p>No data to show</p>;
 
     return (
       <div
-        style={{ marginLeft: isRoot ? 0 : '20px' }}
-        className={`${styles.viewer} ${styles.node}`}
+        style={{ marginLeft: isRoot ? 0 : '20px', ...style }}
+        className={styles.node}
       >
         {collapsible ? (
           <>
@@ -66,7 +67,7 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
               {collapsed ? (
                 <>
                   {openingBracket}
-                  {value && Object.values(value).length ? (
+                  {data && Object.values(data).length ? (
                     <span className={styles.dots}>...</span>
                   ) : null}
                   {closingBracket}
@@ -79,12 +80,12 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
             {!collapsed && (
               <>
                 <div>
-                  {Object.entries(value as object).map(([key, val]) => (
+                  {Object.entries(data as object).map(([key, val]) => (
                     <JsonNode
                       key={key}
                       name={key}
                       rootName={rootName}
-                      value={val}
+                      data={val}
                       keys={[...keys, key]}
                       expandLevel={expandLevel - 1}
                       onCopy={onCopy}
@@ -110,7 +111,7 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
               <span className={styles.keyName}>"{rootName}":</span>
             )}
             {!isRoot && <span className={keyClass}>"{name}": </span>}
-            <PrimitiveValue value={value} />
+            <PrimitiveValue data={data} />
             {onCopy && <CopyButton handleCopy={handleCopy} />}
           </>
         )}

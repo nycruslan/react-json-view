@@ -5,7 +5,7 @@ $accent-colors: (
   'light': #ddd,
   'primary': #1a1a1a,
   'string': #028000,
-  'number': #1c00cf,
+  'number': #4d50ee,
   'boolean': #ff8c00,
   'null': #e30000,
 );
@@ -24,6 +24,9 @@ $dots-color: rgb(203, 75, 22);
   line-height: 1.5;
 }
 
+.viewer > node > .node:first-child::before {
+  display: none;
+}
 .node {
   position: relative;
 

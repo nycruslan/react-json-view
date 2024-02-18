@@ -5,9 +5,9 @@ import type { PrimitiveValueProps } from '../types';
 import styles from '../styles.module.scss';
 
 export const PrimitiveValue: React.FC<PrimitiveValueProps> = memo(
-  ({ value }) => {
-    const valueType = value === null ? 'null' : typeof value;
+  ({ data }) => {
+    const valueType = data === null ? 'null' : typeof data;
     const className = `${styles.primitiveValue} ${styles[valueType] || ''}`;
-    return <span className={className}>{JSON.stringify(value)}</span>;
+    return <span className={className}>{JSON.stringify(data)}</span>;
   }
 );

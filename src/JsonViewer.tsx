@@ -5,6 +5,8 @@ import type { JsonViewerProps } from './types';
 import { CollapsibleProvider } from './context';
 import { JsonNode } from './components/JsonNode';
 
+import styles from './styles.module.scss';
+
 /**
  * Renders a JSON Viewer component that displays JSON data in a collapsible tree format.
  *
@@ -30,18 +32,10 @@ import { JsonNode } from './components/JsonNode';
  *   onCopy={(copyInfo) => console.log('Copy action:', copyInfo)}
  * />
  */
-export const JsonViewer: React.FC<JsonViewerProps> = memo(
-  ({ data, rootName, style, expandLevel = 0, onCopy }) => (
-    <CollapsibleProvider>
-      <JsonNode
-        rootName={rootName}
-        value={data}
-        keys={[]}
-        expandLevel={expandLevel}
-        onCopy={onCopy}
-        isRoot
-        style={style}
-      />
-    </CollapsibleProvider>
-  )
-);
+export const JsonViewer: React.FC<JsonViewerProps> = memo(props => (
+  <CollapsibleProvider>
+    <div className={styles.viewer}>
+      <JsonNode keys={[]} isRoot {...props} />
+    </div>
+  </CollapsibleProvider>
+));

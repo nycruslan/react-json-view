@@ -11,8 +11,8 @@ export type onCopyProps = { keys: string[]; value: JsonValue };
 
 export interface JsonNodeProps {
   name?: string;
-  value: JsonValue;
-  expandLevel: number;
+  data: JsonValue;
+  expandLevel?: number;
   keys?: string[];
   isRoot?: boolean;
   rootName?: string;
@@ -30,7 +30,7 @@ export interface JsonViewerProps {
 }
 
 export interface PrimitiveValueProps {
-  value: JsonValue;
+  data: JsonValue;
 }
 
 export interface CollapsibleIndicatorProps {
