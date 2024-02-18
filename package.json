@@ -1,13 +1,13 @@
 {
   "name": "view-json-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "main": "./dist/view-json-react.cjs.js",
   "module": "./dist/view-json-react.esm.js",
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nycruslan/react-json-view.git"
+    "url": "git+https://github.com/nycruslan/react-json-view.git"
   },
   "exports": {
     ".": {
@@ -20,7 +20,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite build && npm run size",
+    "build": "npm run clean && vite build && npm run size",
     "clean": "rimraf dist",
     "lint": "eslint . --ext .ts,.tsx --fix",
     "prepare": "npm run build",

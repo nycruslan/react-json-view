@@ -48,7 +48,7 @@ export default App;
 The JsonViewer component accepts the following props:
 
 - `data` (required): The JSON data to visualize.
-- `rootName` (optional, default: `'root'`): Name for the root node.
+- `rootName` (optional, default: `'root'`): Name for the root node. Set to false to remove.
 - `style` (optional): CSS properties for custom styling.
 - `expandLevel` (optional, default: `0`): Initial JSON structure expansion level.
 - `onCopy` (optional): Callback for the copy action.
