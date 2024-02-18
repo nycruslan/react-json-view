@@ -43,8 +43,6 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
 
     if (value === undefined) return <p>No data to show</p>;
 
-    console.log({ isRoot, name });
-
     return (
       <div
         style={{ marginLeft: isRoot ? 0 : '20px' }}
@@ -79,18 +77,20 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
             </span>
             {onCopy && <CopyButton handleCopy={handleCopy} />}
             {!collapsed && (
-              <span>
-                {Object.entries(value as object).map(([key, val]) => (
-                  <JsonNode
-                    key={key}
-                    name={key}
-                    rootName={rootName}
-                    value={val}
-                    keys={[...keys, key]}
-                    expandLevel={expandLevel - 1}
-                    onCopy={onCopy}
-                  />
-                ))}
+              <>
+                <div>
+                  {Object.entries(value as object).map(([key, val]) => (
+                    <JsonNode
+                      key={key}
+                      name={key}
+                      rootName={rootName}
+                      value={val}
+                      keys={[...keys, key]}
+                      expandLevel={expandLevel - 1}
+                      onCopy={onCopy}
+                    />
+                  ))}
+                </div>
                 <span
                   tabIndex={0}
                   role='button'
@@ -101,11 +101,14 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
                 >
                   {closingBracket}
                 </span>
-              </span>
+              </>
             )}
           </>
         ) : (
           <>
+            {isRoot && rootName && (
+              <span className={styles.keyName}>"{rootName}":</span>
+            )}
             {!isRoot && <span className={keyClass}>"{name}": </span>}
             <PrimitiveValue value={value} />
             {onCopy && <CopyButton handleCopy={handleCopy} />}

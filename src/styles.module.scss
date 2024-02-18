@@ -30,7 +30,7 @@ $dots-color: rgb(203, 75, 22);
   &::before {
     content: '';
     position: absolute;
-    left: -16px;
+    left: -11px;
     top: 0;
     height: 100%;
     border-left: 1px solid map-get($accent-colors, 'light');
@@ -45,6 +45,7 @@ $dots-color: rgb(203, 75, 22);
     user-select: none;
     display: inline-flex;
     align-items: center;
+    padding: 0px 5px;
 
     &.collapsible:hover,
     &.collapsible:active {
@@ -110,7 +111,7 @@ $dots-color: rgb(203, 75, 22);
   border: none;
   border-radius: 3px;
   padding: 0 5px;
-  margin-left: 10px;
+  margin-left: 5px;
   transition: background-color 0.3s $transition-easing,
     opacity 0.1s $transition-easing;
   opacity: 0;
