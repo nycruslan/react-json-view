@@ -13,7 +13,7 @@ export const getKeyClass = (collapsible: boolean) =>
     : `${styles.key} ${styles.primitive}`;
 
 export const handleKeyDown = (
-  event: React.KeyboardEvent<HTMLDivElement>,
+  event: React.KeyboardEvent<HTMLSpanElement>,
   toggleCollapse: () => void
 ) => {
   if (event.key === 'Enter' || event.key === ' ') {

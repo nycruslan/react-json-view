@@ -16,123 +16,79 @@ $transition-easing: ease-in-out;
 $icon-color: rgb(42, 161, 152);
 $dots-color: rgb(203, 75, 22);
 
-// Base viewer styles
 .viewer {
   font-family: $font-family;
   color: $base-color;
-  line-height: 1.5;
-  font-size: 13px;
-  border-radius: 4px;
-  overflow: auto;
   background: $background-color;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-.viewer > .node:first-child::before {
-  display: none;
-}
-
-// Node styles
 .node {
-  margin: 0.1rem 0;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: -2px;
-    top: 0;
-    bottom: 0;
-    border-left: 1px solid map-get($accent-colors, 'light');
+  margin: 5px 0;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:not(:root) {
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      border-left: 1px solid map-get($accent-colors, 'light');
+    }
   }
 
   .key {
     cursor: pointer;
     user-select: none;
-    position: relative;
-    padding-left: 10px; // Adjust padding to fit the arrow icon
+    display: inline-flex;
+    align-items: center;
 
-    &:hover,
-    &:active {
+    &::before {
+      content: '';
+      display: inline-block;
+      margin-right: 5px;
+      border: $arrow-size solid transparent;
+      border-left-color: $icon-color; // Ensure arrow points right
+      transition: transform $transition-duration $transition-easing;
+      transform-origin: center;
+    }
+
+    &.collapsible:hover,
+    &.collapsible:active {
       background-color: $hover-background-color;
     }
 
-    &.collapsible::before {
-      position: absolute;
-      top: 50%;
-      width: 0;
-      height: 0;
-      border: $arrow-size solid transparent; // Create arrow shape
-      border-left-color: $icon-color; // Arrow color
-      transform: translateY(-50%) rotate(0deg); // Ensure arrow points right initially
-      transition: transform $transition-duration $transition-easing;
-    }
-
-    &.expanded.collapsible::before {
-      transform: translateY(-50%) rotate(90deg); // Rotate arrow to point down
+    &.expanded::before {
+      transform: rotate(90deg); // Rotate arrow
     }
   }
 
-  .key.primitive {
-    cursor: default; // Remove pointer cursor
-    &:hover,
-    &:active {
-      background-color: transparent; // Remove hover effect
-    }
+  .dots {
+    color: $dots-color;
+    padding-left: 5px;
   }
 }
 
-.dots {
-  color: $dots-color;
-}
-
-// Value styles
 .primitiveValue {
-  display: inline-block;
-  margin-left: 3px;
-  &.string {
-    color: map-get($accent-colors, 'string');
+  margin-left: 5px;
+
+  @each $type, $color in $accent-colors {
+    &.#{$type} {
+      color: $color;
+    }
   }
-  &.number {
-    color: map-get($accent-colors, 'number');
-  }
-  &.boolean {
-    color: map-get($accent-colors, 'boolean');
-  }
+
   &.null {
-    color: map-get($accent-colors, 'null');
     font-style: italic;
     text-transform: uppercase;
-    background-color: $hover-background-color;
   }
 }
 
-// Content styles
 .content {
-  margin-left: 1rem;
-}
-
-// Arrow styles
-.arrowCollapsed,
-.arrowExpanded {
-  display: inline-block;
-  margin-right: 5px;
-  border-left-color: $icon-color; // This sets the color of the arrow
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: $arrow-size;
-  border-color: transparent;
-  border-left-color: $icon-color;
-  cursor: pointer;
-  transition: transform $transition-duration $transition-easing;
-}
-
-.arrowCollapsed {
-  transform: rotate(0deg);
-}
-
-.arrowExpanded {
-  transform: rotate(90deg);
+  padding-left: 20px;
 }
 
 .copyButton {
@@ -140,19 +96,18 @@ $dots-color: rgb(203, 75, 22);
   background-color: #eee;
   border: none;
   border-radius: 3px;
-  margin-left: 5px;
   padding: 0 5px;
-  opacity: 0;
-  transition: background-color 0.3s $transition-easing,
-    opacity 0.1s $transition-easing;
-  pointer-events: none;
+  margin-left: 10px;
+  transition: opacity 0.1s $transition-easing,
+    background-color 0.3s $transition-easing;
+  opacity: 0; // Initially hidden
 
+  &:hover,
   &.copySuccess {
     background-color: #4caf50;
   }
 }
 
 .node:hover > .copyButton {
-  opacity: 1;
-  pointer-events: all;
+  opacity: 1; // Show button on hover
 }

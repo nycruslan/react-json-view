@@ -1,9 +1,9 @@
-import { memo, ReactElement } from 'react';
+import { memo } from 'react';
 
 import type { JsonViewerProps } from './types';
 
-import { JsonViewerContent } from './components/JsonViewerContent';
 import { CollapsibleProvider } from './context';
+import { JsonNode } from './components/JsonNode';
 
 /**
  * Renders a JSON Viewer component that displays JSON data in a collapsible tree format.
@@ -30,24 +30,18 @@ import { CollapsibleProvider } from './context';
  *   onCopy={(copyInfo) => console.log('Copy action:', copyInfo)}
  * />
  */
-export const JsonViewer = memo(
-  ({
-    data,
-    rootName,
-    style,
-    expandLevel,
-    onCopy,
-  }: JsonViewerProps): ReactElement => {
-    return (
-      <CollapsibleProvider>
-        <JsonViewerContent
-          data={data}
-          rootName={rootName}
-          style={style}
-          expandLevel={expandLevel}
-          onCopy={onCopy}
-        />
-      </CollapsibleProvider>
-    );
-  }
+export const JsonViewer: React.FC<JsonViewerProps> = memo(
+  ({ data, rootName = 'root', style, expandLevel = 0, onCopy }) => (
+    <CollapsibleProvider>
+      <JsonNode
+        name={rootName || 'root'}
+        value={data}
+        keys={[]}
+        expandLevel={expandLevel}
+        onCopy={onCopy}
+        isRoot
+        style={style}
+      />
+    </CollapsibleProvider>
+  )
 );

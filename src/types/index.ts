@@ -14,6 +14,8 @@ export interface JsonNodeProps {
   value: JsonValue;
   expandLevel: number;
   keys?: string[];
+  isRoot?: boolean;
+  style?: CSSProperties;
   onCopy?: (copyInfo: onCopyProps) => void;
 }
 
@@ -27,7 +29,7 @@ export interface JsonViewerProps {
 }
 
 export interface PrimitiveValueProps {
-  value: Primitive;
+  value: JsonValue;
 }
 
 export interface CollapsibleIndicatorProps {
