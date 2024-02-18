@@ -1,6 +1,6 @@
 {
   "name": "view-json-react",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "module",
   "main": "./dist/view-json-react.cjs.js",
   "module": "./dist/view-json-react.esm.js",
