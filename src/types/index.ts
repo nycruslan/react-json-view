@@ -15,6 +15,7 @@ export interface JsonNodeProps {
   expandLevel: number;
   keys?: string[];
   isRoot?: boolean;
+  rootName?: string;
   style?: CSSProperties;
   onCopy?: (copyInfo: onCopyProps) => void;
 }

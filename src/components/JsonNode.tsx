@@ -13,7 +13,15 @@ import styles from '../styles.module.scss';
 import type { JsonNodeProps } from '../types';
 
 export const JsonNode: React.FC<JsonNodeProps> = memo(
-  ({ name, keys = [], value, expandLevel = 0, onCopy, isRoot = false }) => {
+  ({
+    name,
+    rootName,
+    keys = [],
+    value,
+    expandLevel = 0,
+    onCopy,
+    isRoot = false,
+  }) => {
     const path = keys.join('-');
     const { collapsed, toggleCollapse } = useCollapsible(
       expandLevel <= 0,
@@ -24,8 +32,10 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
     const keyClass = getKeyClass(collapsible);
 
     const handleCopy = () => {
+      const newKeys = rootName ? [rootName, ...keys] : [...keys];
+
       const copyInfo = {
-        keys: isRoot ? [name || 'root'] : [...keys, name || 'root'],
+        keys: newKeys,
         value,
       };
       onCopy?.(copyInfo);
@@ -72,6 +82,7 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
                   <JsonNode
                     key={key}
                     name={key}
+                    rootName={rootName}
                     value={val}
                     keys={[...keys, key]}
                     expandLevel={expandLevel - 1}

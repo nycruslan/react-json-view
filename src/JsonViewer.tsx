@@ -34,7 +34,7 @@ export const JsonViewer: React.FC<JsonViewerProps> = memo(
   ({ data, rootName, style, expandLevel = 0, onCopy }) => (
     <CollapsibleProvider>
       <JsonNode
-        name={rootName}
+        rootName={rootName}
         value={data}
         keys={[]}
         expandLevel={expandLevel}
