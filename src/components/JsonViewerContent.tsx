@@ -24,7 +24,7 @@ export const JsonViewerContent = memo(
     const initialCollapsed = expandLevel < 1;
     const { collapsed, toggleCollapse } = useCollapsible(
       initialCollapsed,
-      `jsonViewer-${rootName}-root`
+      `jsonViewer-${rootName || 'rootName'}-root`
     );
     const collapsible = isCollapsible(data);
     const [openingBracket, closingBracket] = getBrackets(data);
@@ -42,7 +42,7 @@ export const JsonViewerContent = memo(
               tabIndex={0}
               role='button'
               aria-expanded={!collapsed}
-              aria-label={`${rootName} expandable`}
+              aria-label={`${rootName || 'rootName'} expandable`}
               onClick={toggleCollapse}
               onKeyDown={(e: KeyboardEvent<HTMLDivElement>) =>
                 handleKeyDown(e, toggleCollapse)
@@ -50,7 +50,7 @@ export const JsonViewerContent = memo(
               className={keyClass}
             >
               <CollapsibleIndicator collapsed={collapsed} />
-              {rootName ? `${rootName}: ` : null}
+              {rootName ? `"${rootName}": ` : null}
               {collapsed ? (
                 <>
                   {openingBracket}
@@ -79,7 +79,7 @@ export const JsonViewerContent = memo(
             {!collapsed && (
               <div
                 className={styles.content}
-                aria-label={`${rootName} content`}
+                aria-label={`${rootName || 'rootName'} content`}
               >
                 {typeof data === 'object' && data !== null
                   ? Object.entries(data).map(([key, value]) => (
@@ -99,7 +99,7 @@ export const JsonViewerContent = memo(
               <span
                 tabIndex={0}
                 role='button'
-                aria-label={`Collapse ${rootName}`}
+                aria-label={`Collapse ${rootName || 'rootName'}`}
                 onClick={toggleCollapse}
                 onKeyDown={(e: KeyboardEvent<HTMLDivElement>) =>
                   handleKeyDown(e, toggleCollapse)
@@ -112,7 +112,9 @@ export const JsonViewerContent = memo(
           </>
         ) : (
           <>
-            <span className={keyClass}>{rootName}: </span>
+            {rootName ? (
+              <span className={keyClass}>{`"${rootName}": `}:</span>
+            ) : null}
             <PrimitiveValue value={data as Primitive} />
           </>
         )}
