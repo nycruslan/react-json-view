@@ -24,11 +24,16 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
     const keyClass = getKeyClass(collapsible);
 
     const handleCopy = () => {
-      const copyInfo = { keys: isRoot ? [] : [...keys, name], value };
+      const copyInfo = {
+        keys: isRoot ? [name || 'root'] : [...keys, name || 'root'],
+        value,
+      };
       onCopy?.(copyInfo);
     };
 
     if (value === undefined) return <p>No data to show</p>;
+
+    console.log({ isRoot, name });
 
     return (
       <div
@@ -46,6 +51,9 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
               className={keyClass}
             >
               <CollapsibleIndicator collapsed={collapsed} />
+              {isRoot && name && (
+                <span className={styles.keyName}>"{name}":</span>
+              )}
               {!isRoot && <span className={styles.keyName}>"{name}":</span>}
               {collapsed ? (
                 <>
@@ -59,7 +67,7 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
             </span>
             {onCopy && <CopyButton handleCopy={handleCopy} />}
             {!collapsed && (
-              <span className={styles.content}>
+              <span>
                 {Object.entries(value as object).map(([key, val]) => (
                   <JsonNode
                     key={key}

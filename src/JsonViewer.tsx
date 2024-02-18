@@ -31,10 +31,10 @@ import { JsonNode } from './components/JsonNode';
  * />
  */
 export const JsonViewer: React.FC<JsonViewerProps> = memo(
-  ({ data, rootName = 'root', style, expandLevel = 0, onCopy }) => (
+  ({ data, rootName, style, expandLevel = 0, onCopy }) => (
     <CollapsibleProvider>
       <JsonNode
-        name={rootName || 'root'}
+        name={rootName}
         value={data}
         keys={[]}
         expandLevel={expandLevel}

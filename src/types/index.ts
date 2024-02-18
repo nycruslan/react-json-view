@@ -10,7 +10,7 @@ export type JsonValue = Primitive | JsonObject | JsonArray;
 export type onCopyProps = { keys: string[]; value: JsonValue };
 
 export interface JsonNodeProps {
-  name: string;
+  name?: string;
   value: JsonValue;
   expandLevel: number;
   keys?: string[];

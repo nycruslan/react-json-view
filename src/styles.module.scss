@@ -25,20 +25,19 @@ $dots-color: rgb(203, 75, 22);
 }
 
 .node {
-  margin: 3px 0;
-  &:first-child {
-    margin-top: 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 0;
+    height: 100%;
+    border-left: 1px solid map-get($accent-colors, 'light');
   }
 
-  &:not(:root):before {
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      border-left: 1px solid map-get($accent-colors, 'light');
-    }
+  &:first-child {
+    margin-top: 0;
   }
 
   .key {
@@ -103,10 +102,6 @@ $dots-color: rgb(203, 75, 22);
     font-style: italic;
     text-transform: uppercase;
   }
-}
-
-.content {
-  padding-left: 20px;
 }
 
 .copyButton {
