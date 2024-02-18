@@ -24,7 +24,7 @@ $dots-color: rgb(203, 75, 22);
   line-height: 1.5;
 }
 
-.viewer > node > .node:first-child::before {
+.viewer > .node:first-child::before {
   display: none;
 }
 .node {
