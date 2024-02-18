@@ -61,14 +61,16 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
               className={keyClass}
             >
               <CollapsibleIndicator collapsed={collapsed} />
-              {isRoot && name && (
-                <span className={styles.keyName}>"{name}":</span>
+              {isRoot && rootName && (
+                <span className={styles.keyName}>"{rootName}":</span>
               )}
               {!isRoot && <span className={styles.keyName}>"{name}":</span>}
               {collapsed ? (
                 <>
                   {openingBracket}
-                  <span className={styles.dots}>...</span>
+                  {value && Object.values(value).length ? (
+                    <span className={styles.dots}>...</span>
+                  ) : null}
                   {closingBracket}
                 </>
               ) : (
