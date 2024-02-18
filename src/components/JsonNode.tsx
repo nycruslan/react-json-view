@@ -47,9 +47,15 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
             >
               <CollapsibleIndicator collapsed={collapsed} />
               {!isRoot && <span>"{name}": </span>}
-              {collapsed
-                ? `${openingBracket}...${closingBracket}`
-                : openingBracket}
+              {collapsed ? (
+                <>
+                  {openingBracket}
+                  <span className={styles.dots}>...</span>
+                  {closingBracket}
+                </>
+              ) : (
+                openingBracket
+              )}
             </span>
             {onCopy && <CopyButton handleCopy={handleCopy} />}
             {!collapsed && (

@@ -64,11 +64,21 @@ $dots-color: rgb(203, 75, 22);
     &.expanded::before {
       transform: rotate(90deg); // Rotate arrow
     }
+
+    &.primitive {
+      cursor: default;
+      &::before {
+        content: none; // Remove arrow for primitive values
+      }
+      &:hover,
+      &:active {
+        background-color: transparent; // Remove hover effect for primitive values
+      }
+    }
   }
 
   .dots {
     color: $dots-color;
-    padding-left: 5px;
   }
 }
 
@@ -98,16 +108,22 @@ $dots-color: rgb(203, 75, 22);
   border-radius: 3px;
   padding: 0 5px;
   margin-left: 10px;
-  transition: opacity 0.1s $transition-easing,
-    background-color 0.3s $transition-easing;
-  opacity: 0; // Initially hidden
+  transition: background-color 0.3s $transition-easing,
+    opacity 0.1s $transition-easing;
+  opacity: 0;
 
   &:hover,
-  &.copySuccess {
-    background-color: #4caf50;
+  &:focus {
+    opacity: 1;
   }
 }
 
-.node:hover > .copyButton {
-  opacity: 1; // Show button on hover
+.copySuccess {
+  background-color: #4caf50;
+  opacity: 1;
+}
+
+.node:hover > .copyButton,
+.node:focus-within > .copyButton {
+  opacity: 1;
 }
