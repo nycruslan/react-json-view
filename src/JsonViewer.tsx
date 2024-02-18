@@ -15,7 +15,7 @@ import { CollapsibleProvider } from './context';
  * @component
  * @param {JsonViewerProps} props - The properties passed to the JsonViewer component.
  * @param {object} props.data - The JSON data to be visualized by the JsonViewer.
- * @param {string} [props.rootName="root"] - The root name to be displayed at the root level of the JSON structure.
+ * @param {string|false} [props.rootName="root"] - The root name to be displayed at the root level of the JSON structure. Set to false to remove root name.
  * @param {React.CSSProperties} [props.style] - Optional CSS styles to be applied to the JsonViewer component.
  * @param {number} [props.expandLevel=0] - The initial level to which the JSON structure is expanded.
  * @param {Function} [props.onCopy] - Optional callback function to be invoked when a copy action is performed.
@@ -25,7 +25,7 @@ import { CollapsibleProvider } from './context';
  * @example
  * <JsonViewer
  *   data={{ key: 'value', nested: { anotherKey: 'anotherValue' } }}
- *   rootName="Example JSON"
+ *   rootName="ExampleJSON"
  *   expandLevel={1}
  *   onCopy={(copyInfo) => console.log('Copy action:', copyInfo)}
  * />
@@ -33,9 +33,9 @@ import { CollapsibleProvider } from './context';
 export const JsonViewer = memo(
   ({
     data,
-    rootName = 'root',
+    rootName,
     style,
-    expandLevel = 0,
+    expandLevel,
     onCopy,
   }: JsonViewerProps): ReactElement => {
     return (

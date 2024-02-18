@@ -24,7 +24,7 @@ export const JsonViewerContent = memo(
     const initialCollapsed = expandLevel < 1;
     const { collapsed, toggleCollapse } = useCollapsible(
       initialCollapsed,
-      `jsonViewer-${rootName}`
+      `jsonViewer-${rootName}-root`
     );
     const collapsible = isCollapsible(data);
     const [openingBracket, closingBracket] = getBrackets(data);
@@ -50,7 +50,7 @@ export const JsonViewerContent = memo(
               className={keyClass}
             >
               <CollapsibleIndicator collapsed={collapsed} />
-              {rootName}:{' '}
+              {rootName ? `${rootName}: ` : null}
               {collapsed ? (
                 <>
                   {openingBracket}
@@ -68,7 +68,10 @@ export const JsonViewerContent = memo(
             {onCopy && (
               <CopyButton
                 handleCopy={() => {
-                  const copyInfo = { keys: [rootName], value: data };
+                  const copyInfo = {
+                    keys: rootName ? [rootName] : [],
+                    value: data,
+                  };
                   onCopy(copyInfo);
                 }}
               />
@@ -83,7 +86,7 @@ export const JsonViewerContent = memo(
                       <JsonNode
                         key={key}
                         name={key}
-                        keys={[rootName, key]} // Start with rootName and add the current key
+                        keys={rootName ? [rootName, key] : [key]} // Start with rootName and add the current key
                         value={value}
                         expandLevel={expandLevel - 1}
                         onCopy={onCopy}
