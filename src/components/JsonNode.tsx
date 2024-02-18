@@ -42,16 +42,6 @@ export const JsonNode: React.FC<JsonNodeProps> = memo(
       onCopy?.(copyInfo);
     };
 
-    if (data === undefined)
-      return (
-        <div
-          style={{ marginLeft: isRoot ? 0 : '20px', ...style }}
-          className={styles.node}
-        >
-          No data to show
-        </div>
-      );
-
     return (
       <div
         style={{ marginLeft: isRoot ? 0 : '20px', ...style }}

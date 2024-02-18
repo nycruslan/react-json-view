@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import styles from '../styles.module.scss';
 
 export const CopyButton = ({ handleCopy }: { handleCopy: () => void }) => {
