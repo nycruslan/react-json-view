@@ -7,12 +7,14 @@ export interface JsonObject {
 export type JsonArray = JsonValue[];
 export type JsonValue = Primitive | JsonObject | JsonArray;
 
+export type onCopyProps = { keys: string[]; value: JsonValue };
+
 export interface JsonNodeProps {
   name: string;
   value: JsonValue;
   expandLevel: number;
   keys?: string[];
-  onCopy?: (info: { keys: string[]; value: JsonValue }) => void;
+  onCopy?: (copyInfo: onCopyProps) => void;
 }
 
 export interface JsonViewerProps {
@@ -21,7 +23,7 @@ export interface JsonViewerProps {
   style?: CSSProperties;
   expandLevel?: number;
   copy?: boolean;
-  onCopy?: (info: { keys: string[]; value: JsonValue }) => void;
+  onCopy?: (copyInfo: onCopyProps) => void;
 }
 
 export interface PrimitiveValueProps {
